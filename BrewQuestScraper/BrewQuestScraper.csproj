@@ -13,4 +13,8 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="123.0.6312.8600" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BrewQuest.Models\BrewQuest.Models.csproj" />
+  </ItemGroup>
+
 </Project>

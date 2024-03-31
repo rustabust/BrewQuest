@@ -4,25 +4,6 @@ using System.Diagnostics;
 
 namespace BrewQuest.Controllers
 {
-
-    public class Competition
-    {
-        public string CompetitionName { get; set; }
-        public string Host { get; set; }
-        public string EntryWindowOpen { get; set; }
-        public string EntryWindowClose { get; set; }
-        public string FinalJudgingDate { get; set; }
-        public int EntryLimit { get; set; }
-        public decimal EntryFee { get; set; }
-        public string Status { get; set; }
-        public string LocationCity { get; set; }
-        public string LocationState { get; set; }
-        public string ShippingAddress { get; set; }
-        public string ShippingWindowOpen { get; set; }
-        public string ShippingWindowClose { get; set; }
-        public string CompetitionUrl { get; set; }
-        public string HostUrl { get; set; }
-    }
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -30,11 +11,7 @@ namespace BrewQuest.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-
-           
         }
-
-        
 
         public IActionResult Index()
         {

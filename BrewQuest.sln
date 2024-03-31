@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewQuest", "BrewQuestWeb\BrewQuest.csproj", "{52CFE1DB-9804-41B4-BAAB-0955F1D58CE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewQuestScraper", "BrewQuestScraper\BrewQuestScraper.csproj", "{43FB1902-7815-4FA9-A1D7-400E5F4AC5EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewQuestScraper", "BrewQuestScraper\BrewQuestScraper.csproj", "{43FB1902-7815-4FA9-A1D7-400E5F4AC5EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewQuest.Models", "BrewQuest.Models\BrewQuest.Models.csproj", "{BF24B40A-6708-410E-87D9-1C4B947ECE3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{43FB1902-7815-4FA9-A1D7-400E5F4AC5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43FB1902-7815-4FA9-A1D7-400E5F4AC5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43FB1902-7815-4FA9-A1D7-400E5F4AC5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF24B40A-6708-410E-87D9-1C4B947ECE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF24B40A-6708-410E-87D9-1C4B947ECE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF24B40A-6708-410E-87D9-1C4B947ECE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF24B40A-6708-410E-87D9-1C4B947ECE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

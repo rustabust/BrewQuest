@@ -8,6 +8,7 @@ namespace BrewQuestScraper
 {
     public class CompetitionInfo
     {
+        public string Name { get; set; }
         public string EntryFee { get; set; }
         public DateTime EntryDeadline { get; set; }
         public DateTime CompetitionDate { get; set; }
