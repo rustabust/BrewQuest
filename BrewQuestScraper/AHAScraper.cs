@@ -12,9 +12,53 @@ using BrewQuest.Models;
 
 namespace BrewQuestScraper
 {
-    public class ScrapeFunctions
+    public class AHAScraper : BaseScraper
     {
-        public static List<CompetitionSummary> PullBasicEventInfoFromLive(string saveToFileName)
+        public static async Task<bool> Scrape()
+        {
+            const bool HIT_LIVE_SUMMARY = false;
+            const bool HIT_LIVE_DETAILS = true;
+            List<CompetitionSummary> compInfos = null;
+            const string BASIC_INFO_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_comps_basic_info_list_for_test.json";
+            const string COMP_INFOS_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
+            if (HIT_LIVE_SUMMARY)
+            {
+                compInfos = pullBasicEventInfoFromLive(BASIC_INFO_FILE);
+            }
+            else
+            {
+                compInfos = CommonFunctions.DeserializeFromJsonFile<List<CompetitionSummary>>(BASIC_INFO_FILE);
+            }
+
+            List<Competition> competitions = new List<Competition>();
+            if (HIT_LIVE_DETAILS)
+            {
+                // crawl the details page, parse, and convert to common objects
+                //for (int i = 0; i < 5; i++)
+                int counter = 0;
+                Console.WriteLine("pulling competition infos from AHA details pages...");
+                int compInfoTotal = compInfos.Count;
+                foreach (var compInfo in compInfos)
+                {
+                    counter++;
+                    Console.WriteLine(counter + "/" + compInfoTotal + " - pulling info for competition name=" + compInfo.Name + " url:" + compInfo.DetailsUrl);
+                    Competition competition = await getAHACompetitionInfoFromDetailsPage(compInfo.DetailsUrl);
+                    competitions.Add(competition);
+                }
+
+                // save objects listing to file for testing
+                CommonFunctions.SerializeToJsonFile(competitions, COMP_INFOS_FILE);
+            }
+
+            // load from file for further testing/processing...
+            competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(COMP_INFOS_FILE);
+
+            // save somewhere to the cloud??
+            // what else next?
+
+            return true;
+        }
+        private static List<CompetitionSummary> pullBasicEventInfoFromLive(string saveToFileName)
         {
             var compInfos = new List<CompetitionSummary>();
 
@@ -65,13 +109,12 @@ namespace BrewQuestScraper
             return compInfos;
         }
 
-        public static async Task<BrewQuest.Models.Competition> GetAHACompetitionInfoFromDetailsPage(string url)
-        {
-            var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
+      
 
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
+        private static async Task<BrewQuest.Models.Competition> getAHACompetitionInfoFromDetailsPage(string url)
+        {
+            HtmlDocument htmlDocument = await getHtmlDocument(url);
+           
             string ogDescriptionString = getMetaTagFromHtmlDocument(htmlDocument, "og:description");
             string title = getMetaTagFromHtmlDocument(htmlDocument, "og:title");
 
@@ -97,17 +140,6 @@ namespace BrewQuestScraper
                 LocationCountry = ahaCompInfo.Country
             };
             return competition;
-        }
-
-        private static string getMetaTagFromHtmlDocument(HtmlDocument htmlDocument, string propertyName)
-        {
-            var metaTags = htmlDocument.DocumentNode.SelectNodes("//meta[@property='" + propertyName + "']");
-            if (metaTags != null && metaTags.Count > 0)
-            {
-                var ogDescription = metaTags[0].Attributes["content"].Value;
-                return ogDescription;
-            }
-            throw new Exception("no Meta Tag found in document with name " + propertyName);
         }
 
         private static AHACompetitionInfo parseCompetitionInfo(string ogDescriptionContentString)

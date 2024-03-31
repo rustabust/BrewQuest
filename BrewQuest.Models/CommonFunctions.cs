@@ -11,6 +11,33 @@ namespace BrewQuest.Models
 {
     public static class CommonFunctions
     {
+        public const string COMPETITIONS_MASTER_JSON_FILEPATH = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\BrewQuest_CompetitionsList_master.json";
+
+        public static void AddObjectsToFile<T>(List<T> inputObjects, string fileName)
+        {
+            List<T> existingObjects = new List<T>();
+
+            // Read existing objects from file
+            if (File.Exists(fileName))
+            {
+                string json = File.ReadAllText(fileName);
+                existingObjects = JsonConvert.DeserializeObject<List<T>>(json);
+            }
+
+            // Add input objects if they don't already exist
+            foreach (var obj in inputObjects)
+            {
+                if (!existingObjects.Contains(obj))
+                {
+                    existingObjects.Add(obj);
+                }
+            }
+
+            // Write back to file
+            string outputJson = JsonConvert.SerializeObject(existingObjects, Formatting.Indented);
+            File.WriteAllText(fileName, outputJson);
+        }
+
         public static string nonZeroDateTime(DateTime? date)
         {
             if (date == null || date == new DateTime())

@@ -21,7 +21,8 @@ namespace BrewQuest.Controllers
 
         private List<Competition> loadCompetitionsFromJson()
         {
-            string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
+            //string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
+            string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\BrewQuest_CompetitionsList_master.json";
             var competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(jsonFile);
             return competitions;
         }
