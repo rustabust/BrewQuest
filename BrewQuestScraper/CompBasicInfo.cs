@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BrewQuestScraper
 {
-    public class CompBasicInfo
+    public class CompetitionSummary
     {
-        public string CompName { get; set; }
-        public string CompDetailsUrl { get; set; }
+        public string Name { get; set; }
+        public string DetailsUrl{ get; set; }
     }
 }

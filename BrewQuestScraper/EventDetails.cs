@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrewQuestScraper
 {
-    public class CompetitionInfo
+    public class AHACompetitionInfo
     {
         public string Name { get; set; }
         public string EntryFee { get; set; }

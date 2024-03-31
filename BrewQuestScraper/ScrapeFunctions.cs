@@ -9,20 +9,20 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using BrewQuest.Models;
 
 namespace BrewQuestScraper
 {
     public class ScrapeFunctions
     {
-        public static List<CompBasicInfo> PullBasicEventInfoFromLive(string saveToFileName)
+        public static List<CompetitionSummary> PullBasicEventInfoFromLive(string saveToFileName)
         {
-            var compInfos = new List<CompBasicInfo>();
+            var compInfos = new List<CompetitionSummary>();
 
 
             // Set up ChromeOptions to run in headless mode (optional)
             var options = new ChromeOptions();
             options.AddArgument("--headless");
-
 
             // Initialize ChromeDriver with options
             using (var driver = new ChromeDriver(options))
@@ -53,7 +53,7 @@ namespace BrewQuestScraper
                     var hyperlinkText = article.FindElement(By.XPath(".//a")).Text;
                     var hyperlinkUrl = article.FindElement(By.XPath(".//a")).GetAttribute("href");
 
-                    var compInfo = new CompBasicInfo { CompName = hyperlinkText, CompDetailsUrl = hyperlinkUrl };
+                    var compInfo = new CompetitionSummary { Name = hyperlinkText, DetailsUrl = hyperlinkUrl };
                     compInfos.Add(compInfo);
 
                     // Print or process the extracted data
@@ -66,36 +66,54 @@ namespace BrewQuestScraper
             return compInfos;
         }
 
-        public static async Task<string> GetOgDescription(string url)
-        //string GetOgDescription(string url)
+        public static async Task<BrewQuest.Models.Competition> GetAHACompetitionInfoFromDetailsPage(string url)
         {
-            try
-            {
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
+            var httpClient = new HttpClient();
+            var html = await httpClient.GetStringAsync(url);
 
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(html);
+            string ogDescriptionString = getMetaTagFromHtmlDocument(htmlDocument, "og:description");
+            string title = getMetaTagFromHtmlDocument(htmlDocument, "og:title");
 
-                var metaTags = htmlDocument.DocumentNode.SelectNodes("//meta[@property='og:description']");
-                if (metaTags != null && metaTags.Count > 0)
-                {
-                    var ogDescription = metaTags[0].Attributes["content"].Value;
-                    return ogDescription;
-                }
-                else
-                {
-                    return "No og:description meta tag found.";
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"Error: {ex.Message}";
-            }
+            var ahaCompetitionInfo = parseCompetitionInfo(ogDescriptionString);
+            ahaCompetitionInfo.Name = title;
+
+            var result = getCompetitionFromAhaCompInfo(ahaCompetitionInfo);
+
+            return result;
         }
-        public static CompetitionInfo ParseCompetitionInfo(string infoString)
+
+        private static Competition getCompetitionFromAhaCompInfo(AHACompetitionInfo ahaCompInfo)
         {
-            var infoArray = infoString.Split(new string[] { "Entry Fee: ", " Entry Deadline: ", " Competition Date: ", " Phone Number: ", " Location: " }, StringSplitOptions.RemoveEmptyEntries);
+            var competition = new Competition
+            {
+                CompetitionName = ahaCompInfo.Name,
+                EntryFee = ahaCompInfo.EntryFee,
+                EntryWindowClose = ahaCompInfo.EntryDeadline,
+                FinalJudgingDate = ahaCompInfo.CompetitionDate,
+                //phone number
+                LocationCity = ahaCompInfo.City,
+                LocationState = ahaCompInfo.State,
+                LocationCountry = ahaCompInfo.Country
+            };
+            return competition;
+        }
+
+        private static string getMetaTagFromHtmlDocument(HtmlDocument htmlDocument, string propertyName)
+        {
+            var metaTags = htmlDocument.DocumentNode.SelectNodes("//meta[@property='" + propertyName + "']");
+            if (metaTags != null && metaTags.Count > 0)
+            {
+                var ogDescription = metaTags[0].Attributes["content"].Value;
+                return ogDescription;
+            }
+            throw new Exception("no Meta Tag found in document with name " + propertyName);
+        }
+
+        private static AHACompetitionInfo parseCompetitionInfo(string ogDescriptionContentString)
+        {
+            var infoArray = ogDescriptionContentString.Split(new string[] { "Entry Fee: ", " Entry Deadline: ", " Competition Date: ", " Phone Number: ", " Location: " }, StringSplitOptions.RemoveEmptyEntries);
 
             if (infoArray.Length < 5)
             {
@@ -112,7 +130,7 @@ namespace BrewQuestScraper
             var state = location.Length > 1 ? location[1].Trim() : string.Empty;
             var country = location.Length > 2 ? location[2].Trim() : string.Empty;
 
-            return new CompetitionInfo
+            return new AHACompetitionInfo
             {
                 EntryFee = entryFee,
                 EntryDeadline = entryDeadline,

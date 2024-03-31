@@ -3,5 +3,6 @@
 *.pdb
 */bin
 */obj
-*/.vs
+.vs/*
+*/.vs/*
 BrewQuestWeb/Data
