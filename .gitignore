@@ -1,0 +1,7 @@
+*.dll
+*.exe
+*.pdb
+*/bin
+*/obj
+*/.vs
+BrewQuestWeb/Data
