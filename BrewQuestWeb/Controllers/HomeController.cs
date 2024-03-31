@@ -15,6 +15,19 @@ namespace BrewQuest.Controllers
 
         public IActionResult Index()
         {
+            var competitions = loadCompetitionsFromJson();
+            return View(competitions);
+        }
+
+        private List<Competition> loadCompetitionsFromJson()
+        {
+            string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
+            var competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(jsonFile);
+            return competitions;
+        }
+
+            private List<Competition> loadCompetitionsFromCsv()
+        {
             List<Competition> competitions = new List<Competition>();
 
             // Path to your CSV file
@@ -52,7 +65,7 @@ namespace BrewQuest.Controllers
                 }
             }
 
-            return View(competitions);
+            return competitions;
         }
 
         public IActionResult Privacy()

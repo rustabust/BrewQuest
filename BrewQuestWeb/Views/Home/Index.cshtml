@@ -30,13 +30,14 @@
             <tr>
                 <td>@competition.CompetitionName</td>
                 <td>@competition.Host</td>
-                <td>@competition.EntryWindowOpen</td>
-                <td>@competition.EntryWindowClose</td>
-                <td>@competition.FinalJudgingDate</td>
-                <td>@competition.EntryLimit</td>
+                <td>@CommonFunctions.nonZeroDateTime(competition.EntryWindowOpen)</td>
+                <td>@CommonFunctions.nonZeroDateTime(competition.EntryWindowClose)</td>
+                <td>@CommonFunctions.nonZeroDateTime(competition.FinalJudgingDate)</td>
+                <td>@CommonFunctions.nonZeroInt(competition.EntryLimit)</td>
                 <td>@competition.EntryFee</td>
                 <td>@competition.Status</td>
                 <td>@($"{competition.LocationCity}, {competition.LocationState}")</td>
+                <td>@competition.LocationCountry</td>
                 <td>@competition.ShippingAddress</td>
                 <td>@competition.ShippingWindowOpen</td>
                 <td>@competition.ShippingWindowClose</td>

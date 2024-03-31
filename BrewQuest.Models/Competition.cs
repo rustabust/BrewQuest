@@ -4,10 +4,10 @@
     {
         public string CompetitionName { get; set; }
         public string Host { get; set; }
-        public DateTime EntryWindowOpen { get; set; }
-        public DateTime EntryWindowClose { get; set; }
-        public DateTime FinalJudgingDate { get; set; }
-        public int EntryLimit { get; set; }
+        public DateTime? EntryWindowOpen { get; set; }
+        public DateTime? EntryWindowClose { get; set; }
+        public DateTime? FinalJudgingDate { get; set; }
+        public int? EntryLimit { get; set; }
         public string EntryFee { get; set; }
         public string Status { get; set; }
         public string LocationCity { get; set; }

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using BrewQuest.Models;
@@ -61,7 +60,7 @@ namespace BrewQuestScraper
                 }
 
                 // save to json file in case we want to just use it later for testing purpose so as to not get blocked 
-                SerializeToJsonFile(compInfos, saveToFileName);
+                CommonFunctions.SerializeToJsonFile(compInfos, saveToFileName);
             }
             return compInfos;
         }
@@ -140,73 +139,6 @@ namespace BrewQuestScraper
                 State = state,
                 Country = country
             };
-        }
-
-        //public static EventDetails ParseEventDetails(string content)
-        //{
-        //    EventDetails eventDetails = new EventDetails();
-
-        //    // Extracting entry fee and currency
-        //    var entryFeeMatch = Regex.Match(content, @"Entry Fee: (\d+(\.\d+)?)(\s+([A-Za-z]+))?");
-        //    if (entryFeeMatch.Success)
-        //    {
-        //        eventDetails.EntryFee = decimal.Parse(entryFeeMatch.Groups[1].Value);
-        //        eventDetails.Currency = entryFeeMatch.Groups[4].Success ? entryFeeMatch.Groups[4].Value : "USD";
-        //    }
-
-        //    // Extracting entry deadline
-        //    var entryDeadlineMatch = Regex.Match(content, @"Entry Deadline: (\d{2}/\d{2}/\d{4})");
-        //    if (entryDeadlineMatch.Success)
-        //    {
-        //        eventDetails.EntryDeadline = DateTime.Parse(entryDeadlineMatch.Groups[1].Value);
-        //    }
-
-        //    // Extracting competition date
-        //    var competitionDateMatch = Regex.Match(content, @"Competition Date: (\d{2}/\d{2}/\d{4})");
-        //    if (competitionDateMatch.Success)
-        //    {
-        //        eventDetails.CompetitionDate = DateTime.Parse(competitionDateMatch.Groups[1].Value);
-        //    }
-
-        //    // Extracting phone number
-        //    var phoneNumberMatch = Regex.Match(content, @"Phone Number: (\(\d{3}\) \d{3}-\d{4})");
-        //    if (phoneNumberMatch.Success)
-        //    {
-        //        eventDetails.PhoneNumber = phoneNumberMatch.Groups[1].Value;
-        //    }
-
-        //    // Extracting location
-        //    var locationMatch = Regex.Match(content, @"Location: (.+)$");
-        //    if (locationMatch.Success)
-        //    {
-        //        eventDetails.Location = locationMatch.Groups[1].Value;
-        //    }
-
-        //    return eventDetails;
-        //}
-
-        /// <summary>
-        /// Serialize a C# object to JSON and write to a file
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="fileName"></param>
-        public static void SerializeToJsonFile<T>(T obj, string fileName)
-        {
-            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            File.WriteAllText(fileName, json);
-        }
-
-        /// <summary>
-        /// Deserialize JSON from a file back to a C# object
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public static T DeserializeFromJsonFile<T>(string fileName)
-        {
-            string json = File.ReadAllText(fileName);
-            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }
