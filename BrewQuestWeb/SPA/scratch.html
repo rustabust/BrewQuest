@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <style>
+        .popup-menu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+            .popup-menu ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+                .popup-menu ul li {
+                    cursor: pointer;
+                    padding: 5px;
+                }
+
+                    .popup-menu ul li:hover {
+                        background-color: #f5f5f5;
+                    }
+
+        .sub-menu {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="togglePopupMenu()">Open Popup Menu</button>
+
+    <div id="popupMenu" class="popup-menu">
+        <span class="close-btn" onclick="togglePopupMenu()">X</span>
+        <ul>
+            <li id="cityField">
+                City
+                <ul id="cityDropdown" class="sub-menu">
+                </ul>
+            </li>
+            <li id="stateCountryField">
+                State/Country
+                <ul id="stateCountryDropdown" class="sub-menu">
+                </ul>
+            </li>
+            <li id="entryWindowOpenField">
+                Entry Window Open
+                <ul id="entryWindowOpenDropdown" class="sub-menu">
+                </ul>
+            </li>
+            <li id="entryWindowCloseField">
+                Entry Window Close
+                <ul id="entryWindowCloseDropdown" class="sub-menu">
+                </ul>
+            </li>
+            <li id="finalJudgingDateField">
+                Final Judging Date
+                <ul id="finalJudgingDateDropdown" class="sub-menu">
+                </ul>
+            </li>
+            <li id="entryFeeField">
+                Entry Fee
+                <ul id="entryFeeDropdown" class="sub-menu">
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+    // Sample JSON data
+    var jsonData = [
+        {
+            "CompetitionName": "Evaluacion CERYDER",
+            "Host": null,
+            "EntryWindowOpen": "2024-01-01T00:00:00",
+            "EntryWindowClose": "2024-02-01T00:00:00",
+            "FinalJudgingDate": "2024-03-01T00:00:00",
+            "EntryLimit": 0,
+            "EntryFee": "Entry Fee: 100 MXN",
+            "Status": null,
+            "LocationCity": "Guadalajara",
+            "LocationState": "Jalisco",
+            "LocationCountry": "MX",
+            "ShippingAddress": null,
+            "ShippingWindowOpen": null,
+            "ShippingWindowClose": null,
+            "CompetitionUrl": null,
+            "HostUrl": null
+        },
+        {
+            "CompetitionName": "Another Competition",
+            "Host": null,
+            "EntryWindowOpen": "2024-01-01T00:00:00",
+            "EntryWindowClose": "2024-02-01T00:00:00",
+            "FinalJudgingDate": "2024-03-01T00:00:00",
+            "EntryLimit": 0,
+            "EntryFee": "Entry Fee: 200 MXN",
+            "Status": null,
+            "LocationCity": "Mexico City",
+            "LocationState": "Mexico",
+            "LocationCountry": "MX",
+            "ShippingAddress": null,
+            "ShippingWindowOpen": null,
+            "ShippingWindowClose": null,
+            "CompetitionUrl": null,
+            "HostUrl": null
+        }
+    ];
+
+    // Function to toggle the display of the popup menu
+    function togglePopupMenu() {
+        var popupMenu = document.getElementById("popupMenu");
+        if (popupMenu.style.display === "none" || popupMenu.style.display === "") {
+            popupMenu.style.display = "block";
+        } else {
+            popupMenu.style.display = "none";
+        }
+    }
+
+    // Function to populate dropdown menus with unique values based on JSON data
+    function populateDropdowns() {
+        var cityDropdown = document.getElementById("cityDropdown");
+        var stateCountryDropdown = document.getElementById("stateCountryDropdown");
+        var entryWindowOpenDropdown = document.getElementById("entryWindowOpenDropdown");
+        var entryWindowCloseDropdown = document.getElementById("entryWindowCloseDropdown");
+        var finalJudgingDateDropdown = document.getElementById("finalJudgingDateDropdown");
+        var entryFeeDropdown = document.getElementById("entryFeeDropdown");
+
+        var cities = [];
+        var stateCountries = [];
+        var entryWindowOpens = [];
+        var entryWindowCloses = [];
+        var finalJudgingDates = [];
+        var entryFees = [];
+
+        jsonData.forEach(function (competition) {
+            if (!cities.includes(competition.LocationCity)) {
+                cities.push(competition.LocationCity);
+                var cityItem = document.createElement("li");
+                cityItem.textContent = competition.LocationCity;
+                cityDropdown.appendChild(cityItem);
+            }
+            if (!stateCountries.includes(competition.LocationState + ", " + competition.LocationCountry)) {
+                stateCountries.push(competition.LocationState + ", " + competition.LocationCountry);
+                var stateCountryItem = document.createElement("li");
+                stateCountryItem.textContent = competition.LocationState + ", " + competition.LocationCountry;
+                stateCountryDropdown.appendChild(stateCountryItem);
+            }
+            if (!entryWindowOpens.includes(competition.EntryWindowOpen)) {
+                entryWindowOpens.push(competition.EntryWindowOpen);
+                var entryWindowOpenItem = document.createElement("li");
+                entryWindowOpenItem.textContent = competition.EntryWindowOpen;
+                entryWindowOpenDropdown.appendChild(entryWindowOpenItem);
+            }
+            if (!entryWindowCloses.includes(competition.EntryWindowClose)) {
+                entryWindowCloses.push(competition.EntryWindowClose);
+                var entryWindowCloseItem = document.createElement("li");
+                entryWindowCloseItem.textContent = competition.EntryWindowClose;
+                entryWindowCloseDropdown.appendChild(entryWindowCloseItem);
+            }
+            if (!finalJudgingDates.includes(competition.FinalJudgingDate)) {
+                finalJudgingDates.push(competition.FinalJudgingDate);
+                var finalJudgingDateItem = document.createElement("li");
+                finalJudgingDateItem.textContent = competition.FinalJudgingDate;
+                finalJudgingDateDropdown.appendChild(finalJudgingDateItem);
+            }
+            if (!entryFees.includes(competition.EntryFee)) {
+                entryFees.push(competition.EntryFee);
+                var entryFeeItem = document.createElement("li");
+                entryFeeItem.textContent = competition.EntryFee;
+                entryFeeDropdown.appendChild(entryFeeItem);
+            }
+        });
+    }
+
+    // Populate dropdown menus with JSON data
+    populateDropdowns();
+</script>
