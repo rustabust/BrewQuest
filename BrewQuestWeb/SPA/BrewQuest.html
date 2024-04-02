@@ -19,56 +19,13 @@
 
         <div id="popupMenu" class="popup-menu">
             <span class="close-btn" onclick="togglePopupMenu()">X</span>
-
-            <!--select something 
-            <select>
-                <option>option 1</option>
-                <option>option 2</option>
-                <option>option 3</option>
-            </select>-->
-
-            <!--<ul class="dropdown">
-                <li class="dropdown-btn">Select an option</li>
-                <ul class="dropdown-content">
-                    <li>Option 1</li>
-                    <li>Option 2</li>
-                    <li>Option 3</li>-->
-                    <!-- Add more options as needed -->
-                <!--</ul>
-            </ul>-->
-
-            <div class="dropdown-holder">
-                <ul class="dropdown">
-                    <li class="dropdown-btn">City</li>
-                    <ul id="cityDropdown" class="dropdown-content">
-                    </ul>
-                </ul>
+            <div id="filter_states_checkboxlist">
+                States<br />
             </div>
 
-            <div class="dropdown-holder">
-                <ul class="dropdown">
-                    <li class="dropdown-btn">State</li>
-                    <ul id="stateDropdown" class="dropdown-content">
-                    </ul>
-                </ul>
+            <div id="filter_countries_checkboxlist">
+                Countries<br />
             </div>
-
-            <div class="dropdown-holder">
-                <ul class="dropdown">
-                    <li class="dropdown-btn">Country</li>
-                    <ul id="countryDropdown" class="dropdown-content">
-                    </ul>
-                    </ul>
-            </div>
-
-            <div class="dropdown-holder">
-                <ul class="dropdown">
-                    <li class="dropdown-btn">Entry Feee</li>
-                    <ul id="entryFeeDropdown" class="dropdown-content">
-                    </ul>
-                    </ul>
-            </div>
-
         </div>
 
         <table id="competitionTable" class="table table-striped table-bordered">
@@ -93,7 +50,8 @@
         var jsonData = getJsonData();
         populateTable(jsonData);
         //setupFilterMenu();
-        populateDropdowns(jsonData);
+        //populateDropdowns(jsonData);
+        populateFilterMenu(jsonData);
     </script>
 </body>
 </html>

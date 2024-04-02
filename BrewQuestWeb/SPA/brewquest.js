@@ -29,75 +29,138 @@ function togglePopupMenu() {
 //    });
 //}
 
-// Function to populate dropdown menus with unique values based on JSON data
-function populateDropdowns(jsonData) {
-    var cityDropdown = document.getElementById("cityDropdown");
-    var stateDropdown = document.getElementById("stateDropdown");
-    var countryDropdown = document.getElementById("countryDropdown");
-    //var entryWindowOpenDropdown = document.getElementById("entryWindowOpenDropdown");
-    //var entryWindowCloseDropdown = document.getElementById("entryWindowCloseDropdown");
-    //var finalJudgingDateDropdown = document.getElementById("finalJudgingDateDropdown");
-    var entryFeeDropdown = document.getElementById("entryFeeDropdown");
+function populateFilterMenu(jsonObjects) {
+    // Extract unique state values
+    const states = jsonObjects.reduce((acc, obj) => {
+        if (obj.LocationState && !acc.includes(obj.LocationState)) {
+            acc.push(obj.LocationState);
+        }
+        return acc;
+    }, []);
+    const countries = jsonObjects.reduce((acc, obj) => {
+        if (obj.LocationCountry && !acc.includes(obj.LocationCountry)) {
+            acc.push(obj.LocationCountry);
+        }
+        return acc;
+    }, []);
 
-    var cities = [];
-    var states = [];
-    var countries = [];
-    //var entryWindowOpens = [];
-    //var entryWindowCloses = [];
-    //var finalJudgingDates = [];
-    var entryFees = [];
+    // Get the container div
+    const statesContainer = document.getElementById('filter_states_checkboxlist');
 
-    jsonData.forEach(function (competition) {
-        if (!cities.includes(competition.LocationCity)) {
-            cities.push(competition.LocationCity);
-            var cityItem = document.createElement("li");
-            cityItem.textContent = competition.LocationCity;
-            cityDropdown.appendChild(cityItem);
-        }
-        if (!states.includes(competition.LocationState)) {
-            states.push(competition.LocationState);
-            var stateItem = document.createElement("li");
-            stateItem.textContent = competition.LocationState;
-            stateDropdown.appendChild(stateItem);
-        }
-        if (!countries.includes(competition.LocationCountry)) {
-            countries.push(competition.LocationCountry);
-            var countryItem = document.createElement("li");
-            countryItem.textContent = competition.LocationCountry;
-            countryDropdown.appendChild(countryItem);
-        }
-        //if (!stateCountries.includes(competition.LocationState + ", " + competition.LocationCountry)) {
-        //    stateCountries.push(competition.LocationState + ", " + competition.LocationCountry);
-        //    var stateCountryItem = document.createElement("li");
-        //    stateCountryItem.textContent = competition.LocationState + ", " + competition.LocationCountry;
-        //    stateCountryDropdown.appendChild(stateCountryItem);
-        //}
-        //if (!entryWindowOpens.includes(competition.EntryWindowOpen)) {
-        //    entryWindowOpens.push(competition.EntryWindowOpen);
-        //    var entryWindowOpenItem = document.createElement("li");
-        //    entryWindowOpenItem.textContent = competition.EntryWindowOpen;
-        //    entryWindowOpenDropdown.appendChild(entryWindowOpenItem);
-        //}
-        //if (!entryWindowCloses.includes(competition.EntryWindowClose)) {
-        //    entryWindowCloses.push(competition.EntryWindowClose);
-        //    var entryWindowCloseItem = document.createElement("li");
-        //    entryWindowCloseItem.textContent = competition.EntryWindowClose;
-        //    entryWindowCloseDropdown.appendChild(entryWindowCloseItem);
-        //}
-        //if (!finalJudgingDates.includes(competition.FinalJudgingDate)) {
-        //    finalJudgingDates.push(competition.FinalJudgingDate);
-        //    var finalJudgingDateItem = document.createElement("li");
-        //    finalJudgingDateItem.textContent = competition.FinalJudgingDate;
-        //    finalJudgingDateDropdown.appendChild(finalJudgingDateItem);
-        //}
-        if (!entryFees.includes(competition.EntryFee)) {
-            entryFees.push(competition.EntryFee);
-            var entryFeeItem = document.createElement("li");
-            entryFeeItem.textContent = competition.EntryFee;
-            entryFeeDropdown.appendChild(entryFeeItem);
-        }
+    // Create checkboxes
+    states.forEach(state => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'state';
+        checkbox.id = 'cb_' + state.replace(/\s/g, '');
+        checkbox.value = state;
+
+        const label = document.createElement('label');
+        label.textContent = state;
+        label.setAttribute('for', checkbox.id);
+
+        statesContainer.appendChild(checkbox);
+        statesContainer.appendChild(label);
+    });
+
+    const countriesContainer = document.getElementById('filter_countries_checkboxlist');
+
+    // Create checkboxes
+    countries.forEach(country => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'country';
+        checkbox.id = 'cb_' + country.replace(/\s/g, '');
+        checkbox.value = country;
+
+        const label = document.createElement('label');
+        label.textContent = country;
+        label.setAttribute('for', checkbox.id);
+
+        countriesContainer.appendChild(checkbox);
+        countriesContainer.appendChild(label);
     });
 }
+
+// Function to populate dropdown menus with unique values based on JSON data
+//function populateDropdowns(jsonData) {
+//    //var cityDropdown = document.getElementById("cityDropdown");
+//    //var stateDropdown = document.getElementById("stateDropdown");
+//    //var countryDropdown = document.getElementById("countryDropdown");
+//    //var entryWindowOpenDropdown = document.getElementById("entryWindowOpenDropdown");
+//    //var entryWindowCloseDropdown = document.getElementById("entryWindowCloseDropdown");
+//    //var finalJudgingDateDropdown = document.getElementById("finalJudgingDateDropdown");
+//    //var entryFeeDropdown = document.getElementById("entryFeeDropdown");
+
+//    var stateCheckboxDiv = document.getElementById("filter_states_checkboxlist");
+
+//    //<input type="checkbox" id="cb_states_AL" />
+//    //        <label for="cb_states_AL">Alabama</label>
+//    //        <input type="checkbox" id="cb_states_VA" />
+//    //        <label for="cb_states_VA">Virginia</label>
+//    //        <input type="checkbox" id="cb_states_OK" />
+//    //        <label for="cb_states_OK">Oklahoma</label>
+
+//    //var cities = [];
+//    var states = [];
+//    var countries = [];
+//    //var entryWindowOpens = [];
+//    //var entryWindowCloses = [];
+//    //var finalJudgingDates = [];
+//    //var entryFees = [];
+
+//    jsonData.forEach(function (competition) {
+//        //if (!cities.includes(competition.LocationCity)) {
+//        //    cities.push(competition.LocationCity);
+//        //    var cityItem = document.createElement("li");
+//        //    cityItem.textContent = competition.LocationCity;
+//        //    cityDropdown.appendChild(cityItem);
+//        //}
+//        if (!states.includes(competition.LocationState)) {
+//            states.push(competition.LocationState);
+//            //var stateItem = document.createElement("li");
+//            var stateItem = document.createElement("li");
+//            stateItem.textContent = competition.LocationState;
+//            stateDropdown.appendChild(stateItem);
+//        }
+//        if (!countries.includes(competition.LocationCountry)) {
+//            countries.push(competition.LocationCountry);
+//            var countryItem = document.createElement("li");
+//            countryItem.textContent = competition.LocationCountry;
+//            countryDropdown.appendChild(countryItem);
+//        }
+//        //if (!stateCountries.includes(competition.LocationState + ", " + competition.LocationCountry)) {
+//        //    stateCountries.push(competition.LocationState + ", " + competition.LocationCountry);
+//        //    var stateCountryItem = document.createElement("li");
+//        //    stateCountryItem.textContent = competition.LocationState + ", " + competition.LocationCountry;
+//        //    stateCountryDropdown.appendChild(stateCountryItem);
+//        //}
+//        //if (!entryWindowOpens.includes(competition.EntryWindowOpen)) {
+//        //    entryWindowOpens.push(competition.EntryWindowOpen);
+//        //    var entryWindowOpenItem = document.createElement("li");
+//        //    entryWindowOpenItem.textContent = competition.EntryWindowOpen;
+//        //    entryWindowOpenDropdown.appendChild(entryWindowOpenItem);
+//        //}
+//        //if (!entryWindowCloses.includes(competition.EntryWindowClose)) {
+//        //    entryWindowCloses.push(competition.EntryWindowClose);
+//        //    var entryWindowCloseItem = document.createElement("li");
+//        //    entryWindowCloseItem.textContent = competition.EntryWindowClose;
+//        //    entryWindowCloseDropdown.appendChild(entryWindowCloseItem);
+//        //}
+//        //if (!finalJudgingDates.includes(competition.FinalJudgingDate)) {
+//        //    finalJudgingDates.push(competition.FinalJudgingDate);
+//        //    var finalJudgingDateItem = document.createElement("li");
+//        //    finalJudgingDateItem.textContent = competition.FinalJudgingDate;
+//        //    finalJudgingDateDropdown.appendChild(finalJudgingDateItem);
+//        //}
+//        //if (!entryFees.includes(competition.EntryFee)) {
+//        //    entryFees.push(competition.EntryFee);
+//        //    var entryFeeItem = document.createElement("li");
+//        //    entryFeeItem.textContent = competition.EntryFee;
+//        //    entryFeeDropdown.appendChild(entryFeeItem);
+//        //}
+//    });
+//}
 
 function blankForNull(dataString) {
     if (dataString == null)
