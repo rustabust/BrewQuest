@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Data Table</title>
+    <title>rustyslist</title>
     <script src="brewquest_competitions.js"></script>
 
     <style>
@@ -60,13 +60,21 @@
         </div>
     </div>
 
+   
+
     <table id="dataTable">
         <thead>
             <tr>
-                <th onclick="sortTable('CompetitionName')">Competition Name</th>
-                <th onclick="sortTable('LocationCity')">City</th>
-                <th onclick="sortTable('LocationState')">State</th>
-                <th onclick="sortTable('LocationCountry')">Country</th>
+                <th onclick="sortTable('CompetitionName')">CompetitionName</th>
+                <!--<th onclick="sortTable('LocationCity')">City</th>-->
+                <th onclick="sortTable('LocationState')">LocationState</th>
+                <th onclick="sortTable('LocationCountry')">LocationCountry</th>
+                <th onclick="sortTable('EntryWindowOpen')">EntryWindowOpen</th>
+                <th onclick="sortTable('EntryWindowClose')">Registration Closes</th>
+                <th onclick="sortTable('FinalJudgingDate')">Judgement Day</th>
+                <th onclick="sortTable('Status')">Status</th>
+                <th onclick="sortTable('ShippingWindowOpen')">Shipping Opens</th>
+                <th onclick="sortTable('ShippingWindowClose')">Shipping Closes</th>
             </tr>
         </thead>
         <tbody id="dataBody">
@@ -75,8 +83,7 @@
     </table>
 
     <script>
-        // Sample JSON objects
-        var data = getJsonData();
+       
 
         // Function to populate table
         function populateTable(data) {
@@ -86,17 +93,74 @@
             data.forEach(function (item) {
                 var row = tableBody.insertRow();
                 row.insertCell(0).innerHTML = item.CompetitionName;
-                row.insertCell(1).innerHTML = item.LocationCity;
-                row.insertCell(2).innerHTML = item.LocationState;
-                row.insertCell(3).innerHTML = item.LocationCountry;
+                //row.insertCell(1).innerHTML = item.LocationCity;
+                row.insertCell(1).innerHTML = item.LocationState;
+                row.insertCell(2).innerHTML = item.LocationCountry;
+                row.insertCell(3).innerHTML = formatDate(item.EntryWindowOpen);
+                row.insertCell(4).innerHTML = formatDate(item.EntryWindowClose);
+                row.insertCell(5).innerHTML = formatDate(item.FinalJudgingDate);
+                row.insertCell(6).innerHTML = item.Status;
+                row.insertCell(7).innerHTML = formatDate(item.ShippingWindowOpen);
+                row.insertCell(8).innerHTML = formatDate(item.ShippingWindowClose);
             });
         }
 
-        // Initial table population
-        populateTable(data);
+        function formatDate(inputDate) {
+            var formattedDate = "";
+            if (inputDate != null && inputDate != "") {
+
+                // Create a new Date object from the input date string
+                const date = new Date(inputDate);
+
+                // Extract day, month, and year components
+                const day = date.getDate();
+                const month = date.getMonth() + 1; // Month is zero-indexed, so we add 1
+                const year = date.getFullYear();
+
+                // Format the date as 'M/D/YYYY'
+                formattedDate = `${month}/${day}/${year}`;
+            }
+
+            return formattedDate;
+        }
+        
+        var currSortedBy = "";
+        var currSortAscending = false;
+
+        function sortTable(sortBy) {
+            var data = getJsonData();
+            var sortAscending = true;
+            if (currSortedBy == sortBy) {
+                sortAscending = !currSortAscending;
+            }
+
+            data = sortByField(data, sortBy, sortAscending);
+            populateTable(data);
+
+            // save these for later
+            currSortedBy = sortBy;
+            currSortAscending = sortAscending;
+        }
+
+        function sortByField(jsonArray, fieldName, ascending = true) {
+            // Function to compare two objects based on the specified field
+            function compare(a, b) {
+                let comparison = 0;
+                if (a[fieldName] < b[fieldName]) {
+                    comparison = -1;
+                }
+                if (a[fieldName] > b[fieldName]) {
+                    comparison = 1;
+                }
+                return ascending ? comparison : comparison * -1;
+            }
+
+            // Sort the array using the compare function
+            return jsonArray.sort(compare);
+        }
 
         // Sorting function
-        function sortTable(field) {
+        function sortTable1(field) {
             var table, rows, switching, i, x, y, shouldSwitch;
             table = document.getElementById("dataTable");
             switching = true;
@@ -189,6 +253,12 @@
                 modal.style.display = "none";
             }
         }
+
+        // page load script
+        var data = getJsonData();
+
+        // Initial table population
+        populateTable(data);
     </script>
 
 </body>

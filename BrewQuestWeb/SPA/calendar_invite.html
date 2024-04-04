@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Calendar Event (CSV)</title>
+</head>
+<body>
+    <button id="generateButton">Generate Calendar Event (CSV)</button>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function () {
+            // Sample calendar event data
+            const event = {
+                title: "Sample Event",
+                description: "This is a sample event",
+                location: "Sample Location",
+                startDate: "2024-04-05T10:00:00",
+                endDate: "2024-04-05T12:00:00"
+            };
+
+            // Create CSV content
+            const csvContent = `
+Title,Description,Location,Start Date,End Date
+${event.title},${event.description},${event.location},${event.startDate},${event.endDate}
+`;
+
+            // Create Blob
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+
+            // Create URL
+            const url = URL.createObjectURL(blob);
+
+            // Create anchor element
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sample_event.csv';
+            document.body.appendChild(a);
+
+            // Trigger download
+            a.click();
+
+            // Clean up
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
