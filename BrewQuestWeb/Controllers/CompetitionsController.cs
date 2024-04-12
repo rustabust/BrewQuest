@@ -26,7 +26,7 @@ public class CompetitionsController : Controller
         {
             if (_competitions == null)
             {
-                CommonFunctions.LoadCompetitionsFromJson();
+                _competitions = CommonFunctions.LoadCompetitionsFromJson();
             }
             return _competitions;
         }
