@@ -77,5 +77,55 @@ namespace BrewQuest.Models
             string json = File.ReadAllText(fileName);
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        public static List<Competition> LoadCompetitionsFromJson()
+        {
+            //string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
+            string jsonFile = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\BrewQuest_CompetitionsList_master.json";
+            var competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(jsonFile);
+            return competitions;
+        }
+
+        public static List<Competition> LoadCompetitionsFromCsv()
+        {
+            List<Competition> competitions = new List<Competition>();
+
+            // Path to your CSV file
+            string csvFilePath = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\Data\\CompMockData.csv";
+
+            // Read the CSV file
+            using (var reader = new StreamReader(csvFilePath))
+            {
+                // Skip the header
+                reader.ReadLine();
+
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+
+                    competitions.Add(new Competition
+                    {
+                        CompetitionName = values[0],
+                        Host = values[1],
+                        EntryWindowOpen = Convert.ToDateTime(values[2]),
+                        EntryWindowClose = Convert.ToDateTime(values[3]),
+                        FinalJudgingDate = Convert.ToDateTime(values[4]),
+                        EntryLimit = int.Parse(values[5]),
+                        EntryFee = values[6],
+                        Status = values[7],
+                        LocationCity = values[8],
+                        LocationState = values[9],
+                        ShippingAddress = values[10],
+                        ShippingWindowOpen = values[11],
+                        ShippingWindowClose = values[12],
+                        CompetitionUrl = values[13],
+                        HostUrl = values[14]
+                    });
+                }
+            }
+
+            return competitions;
+        }
     }
 }

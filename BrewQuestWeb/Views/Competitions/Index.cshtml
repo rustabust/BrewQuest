@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Competition>
+
+@{
+    ViewData["Title"] = "Homebrew Competitions";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table id="competitionsTable">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">Competition Name</th>
+            <th onclick="sortTable(1)">Entry Window Close</th>
+            <th onclick="sortTable(2)">Final Judging Date</th>
+            <th onclick="sortTable(3)">City</th>
+            <th onclick="sortTable(4)">State</th>
+            <th onclick="sortTable(5)">Entry Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comp in Model)
+        {
+            <tr>
+                <td>@comp.CompetitionName</td>
+                <td>@comp.EntryWindowClose</td>
+                <td>@comp.FinalJudgingDate</td>
+                <td>@comp.LocationCity</td>
+                <td>@comp.LocationState</td>
+                <td>@comp.EntryFee</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button onclick="showModal()">Filter by State</button>
+
+<div id="filterModal" style="display:none;">
+    <form method="post" action="@Url.Action("FilterCompetitions", "Competitions")">
+        @foreach (var state in Model.Select(x => x.LocationState).Distinct())
+        {
+            <div>
+                <label>
+                    <input type="checkbox" name="states" value="@state" /> @state
+                </label>
+            </div>
+        }
+        <button type="submit">Apply</button>
+    </form>
+    <button onclick="closeModal()">Close</button>
+</div>
+
+<script>
+    function showModal() {
+        document.getElementById('filterModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('filterModal').style.display = 'none';
+    }
+    
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("competitionsTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare, one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place, based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
