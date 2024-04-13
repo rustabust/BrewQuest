@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrewQuest.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,18 @@ namespace BrewQuestScraper
         public string EntryFee { get; set; }
         public DateTime EntryDeadline { get; set; }
         public DateTime CompetitionDate { get; set; }
-        public string PhoneNumber { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? Country { get; set; }
+        public string? SourceUrl { get; set; }
+        public CompetitionDataSourceTypes CompetitionDataSourceType
+        {
+            get
+            {
+                return CompetitionDataSourceTypes.AHA;
+            }
+        }
     }
         //public class EventDetails
         // {

@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Homebrew Competitions";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    string sortColumn = ViewBag.SortColumn;
+    string sortDirection = ViewBag.SortDirection;
+    List<string> statesFilter = ViewBag.StatesFilter ?? new List<string>();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -9,12 +14,24 @@
 <table id="competitionsTable">
     <thead>
         <tr>
-            <th onclick="sortTable(0)">Competition Name</th>
-            <th onclick="sortTable(1)">Entry Window Close</th>
-            <th onclick="sortTable(2)">Final Judging Date</th>
-            <th onclick="sortTable(3)">City</th>
-            <th onclick="sortTable(4)">State</th>
-            <th onclick="sortTable(5)">Entry Fee</th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "CompetitionName", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Competition Name</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "EntryWindowClose", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Entry Window Close</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "FinalJudgingDate", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Final Judging Date</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "LocationCity", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">City</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "LocationState", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">State</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "EntryFee", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Entry Fee</a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -32,15 +49,28 @@
     </tbody>
 </table>
 
+<div>
+    <a href="@Url.Action("Index", new { page = 1, sortColumn, sortDirection, states = statesFilter })">First</a>
+    @if (currentPage > 1)
+    {
+        <a href="@Url.Action("Index", new { page = currentPage - 1, sortColumn, sortDirection, states = statesFilter })">Previous</a>
+    }
+    @if (currentPage < totalPages)
+    {
+        <a href="@Url.Action("Index", new { page = currentPage + 1, sortColumn, sortDirection, states = statesFilter })">Next</a>
+    }
+    <a href="@Url.Action("Index", new { page = totalPages, sortColumn, sortDirection, states = statesFilter })">Last</a>
+</div>
+
 <button onclick="showModal()">Filter by State</button>
 
 <div id="filterModal" style="display:none;">
-    <form method="post" action="@Url.Action("FilterCompetitions", "Competitions")">
+    <form method="get" action="@Url.Action("Index")">
         @foreach (var state in Model.Select(x => x.LocationState).Distinct())
         {
             <div>
                 <label>
-                    <input type="checkbox" name="states" value="@state" /> @state
+                    <input type="checkbox" name="states" value="@state" @(statesFilter.Contains(state) ? "checked" : "") /> @state
                 </label>
             </div>
         }
@@ -56,53 +86,5 @@
 
     function closeModal() {
         document.getElementById('filterModal').style.display = 'none';
-    }
-    
-    function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("competitionsTable");
-        switching = true;
-        // Set the sorting direction to ascending:
-        dir = "asc";
-        /* Make a loop that will continue until no switching has been done: */
-        while (switching) {
-            // Start by saying: no switching is done:
-            switching = false;
-            rows = table.rows;
-            /* Loop through all table rows (except the first, which contains table headers): */
-            for (i = 1; i < (rows.length - 1); i++) {
-                // Start by saying there should be no switching:
-                shouldSwitch = false;
-                /* Get the two elements you want to compare, one from current row and one from the next: */
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-                /* Check if the two rows should switch place, based on the direction, asc or desc: */
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                /* If a switch has been marked, make the switch and mark that a switch has been done: */
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Each time a switch is done, increase this count by 1:
-                switchcount++;
-            } else {
-                /* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
-        }
     }
 </script>

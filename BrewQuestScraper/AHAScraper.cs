@@ -16,42 +16,33 @@ namespace BrewQuestScraper
     {
         public static async Task<bool> Scrape()
         {
-            const bool HIT_LIVE_SUMMARY = false;
             const bool HIT_LIVE_DETAILS = true;
-            List<CompetitionSummary> compInfos = null;
-            const string BASIC_INFO_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_comps_basic_info_list_for_test.json";
-            const string COMP_INFOS_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_infos.json";
-            if (HIT_LIVE_SUMMARY)
-            {
-                compInfos = pullBasicEventInfoFromLive(BASIC_INFO_FILE);
-            }
-            else
-            {
-                compInfos = CommonFunctions.DeserializeFromJsonFile<List<CompetitionSummary>>(BASIC_INFO_FILE);
-            }
-
+            const string COMP_SUMMARIES_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_summaries.json";
+          
             List<Competition> competitions = new List<Competition>();
             if (HIT_LIVE_DETAILS)
             {
+                var compSummaries = pullCompetitionSummaries();
+
                 // crawl the details page, parse, and convert to common objects
                 //for (int i = 0; i < 5; i++)
                 int counter = 0;
                 Console.WriteLine("pulling competition infos from AHA details pages...");
-                int compInfoTotal = compInfos.Count;
-                foreach (var compInfo in compInfos)
+                int compSummaryTotal = compSummaries.Count;
+                foreach (var compSummary in compSummaries)
                 {
                     counter++;
-                    Console.WriteLine(counter + "/" + compInfoTotal + " - pulling info for competition name=" + compInfo.Name + " url:" + compInfo.DetailsUrl);
-                    Competition competition = await getAHACompetitionInfoFromDetailsPage(compInfo.DetailsUrl);
+                    Console.WriteLine(counter + "/" + compSummaryTotal + " - pulling info for competition name=" + compSummary.Name + " url:" + compSummary.DetailsUrl);
+                    Competition competition = await getAHACompetitionInfoFromDetailsPage(compSummary.DetailsUrl);
                     competitions.Add(competition);
                 }
 
                 // save objects listing to file for testing
-                CommonFunctions.SerializeToJsonFile(competitions, COMP_INFOS_FILE);
+                CommonFunctions.SerializeToJsonFile(competitions, COMP_SUMMARIES_FILE);
             }
 
             // load from file for further testing/processing...
-            competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(COMP_INFOS_FILE);
+            competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(COMP_SUMMARIES_FILE);
 
             // save somewhere to the cloud??
             // what else next?
@@ -109,7 +100,24 @@ namespace BrewQuestScraper
             return compInfos;
         }
 
-      
+        private static List<CompetitionSummary> pullCompetitionSummaries()
+        {
+            List<CompetitionSummary>? compSummaries = null;
+
+            const bool HIT_LIVE_SUMMARY = false;
+            const string BASIC_INFO_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_comps_basic_info_list_for_test.json";
+
+            if (HIT_LIVE_SUMMARY)
+            {
+                compSummaries = pullBasicEventInfoFromLive(BASIC_INFO_FILE);
+            }
+            else
+            {
+                compSummaries = CommonFunctions.DeserializeFromJsonFile<List<CompetitionSummary>>(BASIC_INFO_FILE);
+            }
+
+            return compSummaries;
+        }
 
         private static async Task<BrewQuest.Models.Competition> getAHACompetitionInfoFromDetailsPage(string url)
         {
@@ -120,6 +128,7 @@ namespace BrewQuestScraper
 
             var ahaCompetitionInfo = parseCompetitionInfo(ogDescriptionString);
             ahaCompetitionInfo.Name = title;
+            ahaCompetitionInfo.SourceUrl = url;
 
             var result = getCompetitionFromAhaCompInfo(ahaCompetitionInfo);
 
@@ -137,7 +146,9 @@ namespace BrewQuestScraper
                 //phone number
                 LocationCity = ahaCompInfo.City,
                 LocationState = ahaCompInfo.State,
-                LocationCountry = ahaCompInfo.Country
+                LocationCountry = ahaCompInfo.Country,
+                CompetitionDataSourceType = ahaCompInfo.CompetitionDataSourceType,
+                CompetitionUrl = ahaCompInfo.SourceUrl
             };
             return competition;
         }
@@ -169,7 +180,7 @@ namespace BrewQuestScraper
                 PhoneNumber = phoneNumber,
                 City = city,
                 State = state,
-                Country = country
+                Country = country,
             };
         }
     }

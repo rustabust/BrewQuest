@@ -12,14 +12,14 @@ namespace BrewQuestScraper
     {
         public class BCCompInfo
         {
-            public string CompetitionName { get; set; }
-            public string HostClub { get; set; }
+            public string? CompetitionName { get; set; }
+            public string? HostClub { get; set; }
             public DateTime EntryStartDate { get; set; }
             public DateTime EntryEndDate { get; set; }
             public DateTime FinalJudgingDate { get; set; }
             public int Entries { get; set; }
             public decimal Fee { get; set; }
-            public string Status { get; set; }
+            public string? Status { get; set; }
         }
 
         public static async Task<bool> Scrape()

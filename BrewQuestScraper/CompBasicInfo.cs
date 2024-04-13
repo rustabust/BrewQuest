@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BrewQuestScraper
 {
+    /// <summary>
+    /// class gives a brief summary of a competition. basically a name and url for more info.
+    /// </summary>
     public class CompetitionSummary
     {
         public string Name { get; set; }
