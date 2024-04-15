@@ -13,7 +13,21 @@ namespace BrewQuest.Models
     {
         public const string COMPETITIONS_MASTER_JSON_FILEPATH = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\BrewQuest_CompetitionsList_master.json";
 
-        public static void AddObjectsToFile<T>(List<T> inputObjects, string fileName)
+        public static void SyncCompetitionsToFile(List<Competition> competitions)
+        {
+            SyncObjectsToFile<Competition>(competitions, COMPETITIONS_MASTER_JSON_FILEPATH);
+        }
+
+        /// <summary>
+        /// syncs a list of T to a file presumably also containing a list of T
+        /// at the time of this writing this function will only add new instances
+        /// to the file i.e. it will not update existing if the inputObjects has 
+        /// updated values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="inputObjects"></param>
+        /// <param name="fileName"></param>
+        public static void SyncObjectsToFile<T>(List<T> inputObjects, string fileName)
         {
             List<T> existingObjects = new List<T>();
 
@@ -27,7 +41,7 @@ namespace BrewQuest.Models
             // Add input objects if they don't already exist
             foreach (var obj in inputObjects)
             {
-                if (!existingObjects.Contains(obj))
+                if (!existingObjects.Any(a => a.Equals(obj)))
                 {
                     existingObjects.Add(obj);
                 }

@@ -17,8 +17,8 @@ namespace BrewQuestScraper
         public static async Task<bool> Scrape()
         {
             const bool HIT_LIVE_DETAILS = true;
-            const string COMP_SUMMARIES_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_summaries.json";
-          
+            //const string SCRAPE_OUTPUT_FILE_AHA = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_summaries.json";
+
             List<Competition> competitions = new List<Competition>();
             if (HIT_LIVE_DETAILS)
             {
@@ -37,12 +37,12 @@ namespace BrewQuestScraper
                     competitions.Add(competition);
                 }
 
-                // save objects listing to file for testing
-                CommonFunctions.SerializeToJsonFile(competitions, COMP_SUMMARIES_FILE);
+                // save/sync objects listing to file
+                CommonFunctions.SyncCompetitionsToFile(competitions);
             }
 
             // load from file for further testing/processing...
-            competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(COMP_SUMMARIES_FILE);
+           // competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(SCRAPE_OUTPUT_FILE_AHA);
 
             // save somewhere to the cloud??
             // what else next?
@@ -104,7 +104,7 @@ namespace BrewQuestScraper
         {
             List<CompetitionSummary>? compSummaries = null;
 
-            const bool HIT_LIVE_SUMMARY = false;
+            const bool HIT_LIVE_SUMMARY = true;
             const string BASIC_INFO_FILE = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_comps_basic_info_list_for_test.json";
 
             if (HIT_LIVE_SUMMARY)

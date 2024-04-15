@@ -39,7 +39,7 @@ namespace BrewQuestScraper
 
             }).ToList();
 
-            SyncCompetitionsJson(competitions, CommonFunctions.COMPETITIONS_MASTER_JSON_FILEPATH);
+            CommonFunctions.SyncCompetitionsToFile(competitions);
             return true;
         }
 

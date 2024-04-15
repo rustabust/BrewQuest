@@ -1,11 +1,83 @@
 [
   {
-    "Name": "Iron Brewer VIII",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/iron-brewer-viii/"
+    "Name": "Evaluacion CERYDER",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/evaluacion-ceryder/"
   },
   {
-    "Name": "17th Annual Virginia Beer Blitz",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/17th-annual-virginia-beer-blitz/"
+    "Name": "Fools and Fans Homebrewers Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/fools-and-fans-homebrewers-competition/"
+  },
+  {
+    "Name": "BrewER goes to USA",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/brewer-goes-to-usa/"
+  },
+  {
+    "Name": "WHO Brews It? 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/who-brews-it-2024/"
+  },
+  {
+    "Name": "New World Brew Challenge",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/new-world-brew-challenge/"
+  },
+  {
+    "Name": "XIV Concurso ACervA Mineira de Cervejas Artesanais – Premiação Marco Falcone",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/xiv-concurso-acerva-mineira-de-cervejas-artesanais-premiacao-marco-falcone/"
+  },
+  {
+    "Name": "Alabama Brewers Cup",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/alabama-brewers-cup/"
+  },
+  {
+    "Name": "Boot Brew Fest",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/boot-brew-fest/"
+  },
+  {
+    "Name": "Battle of the Brews",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/battle-of-the-brews/"
+  },
+  {
+    "Name": "Litomyslsky korbel",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/litomyslsky-korbel/"
+  },
+  {
+    "Name": "Spirit of Free Beer Homebrew Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/spirit-of-free-beer-homebrew-competition/"
+  },
+  {
+    "Name": "II Concurso Homebrewer Save The Lagers",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/ii-concurso-homebrewer-save-the-lagers/"
+  },
+  {
+    "Name": "Copa Desierto de Sonora 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-desierto-de-sonora-2024/"
+  },
+  {
+    "Name": "Wisconsin State Fair Amateur Beer",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/wisconsin-state-fair-amateur-beer/"
+  },
+  {
+    "Name": "Primer Concurso CCCUY Abril 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/primer-concurso-cccuy-abril-2024/"
+  },
+  {
+    "Name": "Homebrew Alley XVIII",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/homebrew-alley-xviii/"
+  },
+  {
+    "Name": "Abierto Mexicano de Cerveza",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/abierto-mexicano-de-cerveza/"
+  },
+  {
+    "Name": "2024 Maltose Falcon’s Mayfaire",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/2024-maltose-falcons-mayfaire/"
+  },
+  {
+    "Name": "BeerMe Brew Cup",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/beerme-brew-cup/"
+  },
+  {
+    "Name": "Iron Brewer VIII",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/iron-brewer-viii/"
   },
   {
     "Name": "Colonial Cup",
@@ -38,6 +110,10 @@
   {
     "Name": "Siciliano’s Homebrew Competition",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/sicilianos-homebrew-competition/"
+  },
+  {
+    "Name": "17th Annual Virginia Beer Blitz",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/17th-annual-virginia-beer-blitz/"
   },
   {
     "Name": "Tea Beer Tournament",
@@ -108,12 +184,12 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/port-city-plunder-6th-annual/"
   },
   {
-    "Name": "BrewER goes to Germany",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/brewer-goes-to-germany/"
-  },
-  {
     "Name": "Big Brew 2024",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/big-brew-2024/"
+  },
+  {
+    "Name": "BrewER goes to Germany",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/brewer-goes-to-germany/"
   },
   {
     "Name": "Bratislavský Hrncovar 2024",
@@ -172,14 +248,6 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-centroamericana-de-cerveceros-caseros/"
   },
   {
-    "Name": "California State Fair Commercial Beer Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/california-state-fair-commercial-beer-competition/"
-  },
-  {
-    "Name": "Copa San Arnulfo Zacapu Michoacan 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-san-arnulfo-zacapu-michoacan-2024/"
-  },
-  {
     "Name": "Copa Ovunque",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-ovunque/"
   },
@@ -196,12 +264,8 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/national-homebrew-competition-first-round-indianapolis/"
   },
   {
-    "Name": "Alamo City Brew Battle",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/alamo-city-brew-battle/"
-  },
-  {
-    "Name": "National Brewing Championships, Ireland",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/national-brewing-championships-ireland/"
+    "Name": "Copa San Arnulfo Zacapu Michoacan 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-san-arnulfo-zacapu-michoacan-2024/"
   },
   {
     "Name": "42nd Annual Oregon Homebrewers Festival",
@@ -220,14 +284,6 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/pacific-women-brewers-cup/"
   },
   {
-    "Name": "6º CONCURSO TREMBIER DE CERVEJAS ARTESANAIS",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/6o-concurso-trembier-de-cervejas-artesanais/"
-  },
-  {
-    "Name": "One Shot Trinacria Hombrewers",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/one-shot-trinacria-hombrewers/"
-  },
-  {
     "Name": "Erie County Fair Home Brew Competition",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/erie-county-fair-home-brew-competition/"
   },
@@ -236,16 +292,12 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/colorado-state-fair-craft-beer-competition/"
   },
   {
-    "Name": "Fruit Cup 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/fruit-cup-2024/"
-  },
-  {
     "Name": "African Beer Cup",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/african-beer-cup/"
   },
   {
-    "Name": "California State Fair Homebrew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/california-state-fair-homebrew-competition/"
+    "Name": "Hogtown Brew-Off",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/hogtown-brew-off/"
   },
   {
     "Name": "Moravská vernisáž piva – sout?ž domácích piv 2024",
@@ -264,10 +316,6 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/belgian-beerfest-2024/"
   },
   {
-    "Name": "Hogtown Brew-Off",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/hogtown-brew-off/"
-  },
-  {
     "Name": "3rd Annual CT Craft Beer Grand Prix",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/3rd-annual-ct-craft-beer-grand-prix/"
   },
@@ -280,28 +328,12 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-de-las-alturas-2024/"
   },
   {
-    "Name": "International Beer and Cider Awards",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/international-beer-and-cider-awards/"
-  },
-  {
     "Name": "Fredericksburg Craft Beer Competition",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/fredericksburg-craft-beer-competition/"
   },
   {
-    "Name": "National Homebrew Competition – First Round – Philadelphia",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/national-homebrew-competition-first-round-philadelphia/"
-  },
-  {
-    "Name": "Alameda County Fair Homebrew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/alameda-county-fair-homebrew-competition/"
-  },
-  {
-    "Name": "25th Annual Chico Homebrew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/25th-annual-chico-homebrew-competition/"
-  },
-  {
-    "Name": "1° CONCORSO HOMEBREWING BEERBAGIA",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/1-concorso-homebrewing-beerbagia/"
+    "Name": "International Beer and Cider Awards",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/international-beer-and-cider-awards/"
   },
   {
     "Name": "Celebrity Deathmash 2024 (Club Only)",
@@ -320,6 +352,22 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/11-hrvatsko-homebrew-prvenstvo/"
   },
   {
+    "Name": "National Homebrew Competition – First Round – Philadelphia",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/national-homebrew-competition-first-round-philadelphia/"
+  },
+  {
+    "Name": "Alameda County Fair Homebrew Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/alameda-county-fair-homebrew-competition/"
+  },
+  {
+    "Name": "25th Annual Chico Homebrew Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/25th-annual-chico-homebrew-competition/"
+  },
+  {
+    "Name": "1° CONCORSO HOMEBREWING BEERBAGIA",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/1-concorso-homebrewing-beerbagia/"
+  },
+  {
     "Name": "Del Cielo Home Brew Competition 2024",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/del-cielo-home-brew-competition-2024/"
   },
@@ -336,22 +384,6 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/national-homebrew-competition-first-round-san-diego/"
   },
   {
-    "Name": "Nordeast Brewers Alliance Sour Times Homebrew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/nordeast-brewers-alliance-sour-times-homebrew-competition/"
-  },
-  {
-    "Name": "27th Annual Beer & Mead Brew Off",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/27th-annual-beer-mead-brew-off/"
-  },
-  {
-    "Name": "BrewER goes to Belgium",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/brewer-goes-to-belgium/"
-  },
-  {
-    "Name": "Liquid Poetry Slam 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/liquid-poetry-slam-2024/"
-  },
-  {
     "Name": "The Big E Cider & Perry Competition",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/the-big-e-cider-perry-competition/"
   },
@@ -366,6 +398,22 @@
   {
     "Name": "Danville Brewing Homebrew Comp 2024",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/danville-brewing-homebrew-comp-2024/"
+  },
+  {
+    "Name": "Nordeast Brewers Alliance Sour Times Homebrew Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/nordeast-brewers-alliance-sour-times-homebrew-competition/"
+  },
+  {
+    "Name": "27th Annual Beer & Mead Brew Off",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/27th-annual-beer-mead-brew-off/"
+  },
+  {
+    "Name": "BrewER goes to Belgium",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/brewer-goes-to-belgium/"
+  },
+  {
+    "Name": "Liquid Poetry Slam 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/liquid-poetry-slam-2024/"
   },
   {
     "Name": "ARO ROJO",
@@ -388,12 +436,16 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/national-homebrew-competition-first-round-tampa/"
   },
   {
+    "Name": "Bad Beer 2024 : Belgian Strong Ale",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer-2024-belgian-strong-ale/"
+  },
+  {
     "Name": "Delco Wooder Works Homebrewers Invitational",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/delco-wooder-works-homebrewers-invitational/"
   },
   {
-    "Name": "Bad Beer 2024 : Belgian Strong Ale",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer-2024-belgian-strong-ale/"
+    "Name": "War of the Worts",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/war-of-the-worts/"
   },
   {
     "Name": "Lunar Rendezbrew 30",
@@ -408,20 +460,12 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/the-boneyard-brew-off/"
   },
   {
-    "Name": "War of the Worts",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/war-of-the-worts/"
-  },
-  {
     "Name": "27th Annual Big Batch Brew Bash (BBBB_)",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/27th-annual-big-batch-brew-bash-bbbb_/"
   },
   {
     "Name": "Orpheus MeasFest Homebrew Division",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/orpheus-measfest-homebrew-division/"
-  },
-  {
-    "Name": "Kiwi Pilsner Brew-Off",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/kiwi-pilsner-brew-off/"
   },
   {
     "Name": "National Homebrew Competition – First Round – Portland",
@@ -480,6 +524,14 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/ohbs-1st-homebrew-challenge/"
   },
   {
+    "Name": "Homebrew Cup Chile 2024",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/homebrew-cup-chile-2024/"
+  },
+  {
+    "Name": "First Coast Cup",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/first-coast-cup/"
+  },
+  {
     "Name": "US Open",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/us-open/"
   },
@@ -492,36 +544,24 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/orpheus-meadfest-commercial-division/"
   },
   {
-    "Name": "Homebrew Cup Chile 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/homebrew-cup-chile-2024/"
-  },
-  {
-    "Name": "First Coast Cup",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/first-coast-cup/"
-  },
-  {
     "Name": "BRB Sizzlin’ Hop Summer Showdown",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/brb-sizzlin-hop-summer-showdown/"
-  },
-  {
-    "Name": "Bad Beer2024 : IPA",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer2024-ipa/"
   },
   {
     "Name": "Best of the Bay",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/best-of-the-bay/"
   },
   {
-    "Name": "Northern Utah Homebrew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/northern-utah-homebrew-competition/"
-  },
-  {
-    "Name": "8vo Concurso de Cervezas Caseras del Paraguay (Copa Guaraní de Cervezas 2024 – Caseros)",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/8vo-concurso-de-cervezas-caseras-del-paraguay-copa-guarani-de-cervezas-2024-caseros/"
+    "Name": "Bad Beer2024 : IPA",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer2024-ipa/"
   },
   {
     "Name": "Copa Guaraní de Cervezas 2024",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-guarani-de-cervezas-2024/"
+  },
+  {
+    "Name": "8vo Concurso de Cervezas Caseras del Paraguay (Copa Guaraní de Cervezas 2024 – Caseros)",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/8vo-concurso-de-cervezas-caseras-del-paraguay-copa-guarani-de-cervezas-2024-caseros/"
   },
   {
     "Name": "Your Honey or Your Life Mead Competition",
@@ -540,12 +580,16 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/beer-and-sweat/"
   },
   {
+    "Name": "Copa Conquistadores 2024 Homebrewer",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-conquistadores-2024-homebrewer/"
+  },
+  {
     "Name": "Copa Conquistadores 2024",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-conquistadores-2024/"
   },
   {
-    "Name": "Copa Conquistadores 2024 Homebrewer",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-conquistadores-2024-homebrewer/"
+    "Name": "8th Annual Manitowoc County Fair Blue Ribbon Brew Competition",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/8th-annual-manitowoc-county-fair-blue-ribbon-brew-competition/"
   },
   {
     "Name": "Commander SAAZ 2024",
@@ -554,14 +598,6 @@
   {
     "Name": "Dominion Cup",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/dominion-cup/"
-  },
-  {
-    "Name": "ESB 2024 Home Brew Competition – Like WOW",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/esb-2024-home-brew-competition-like-wow/"
-  },
-  {
-    "Name": "8th Annual Manitowoc County Fair Blue Ribbon Brew Competition",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/8th-annual-manitowoc-county-fair-blue-ribbon-brew-competition/"
   },
   {
     "Name": "COPA DE LOS VOLCANES 2DA EDICION",
@@ -600,10 +636,6 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/mead-me-in-st-louis-and-cider-me-too/"
   },
   {
-    "Name": "Dogg Dayzz 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/dogg-dayzz-2024/"
-  },
-  {
     "Name": "Copa Hidromiel México IV Ed. Categoría Profesional",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/copa-hidromiel-mexico-iv-ed-categoria-profesional/"
   },
@@ -636,32 +668,16 @@
     "DetailsUrl": "https://www.homebrewersassociation.org/events/maryland-microbrewery-festival-homebrew-competition/"
   },
   {
-    "Name": "Michigan Mead Cup",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/michigan-mead-cup/"
-  },
-  {
-    "Name": "La Pola Dorada 2024",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/la-pola-dorada-2024/"
+    "Name": "Bad Beer 2024 : American Pale Ale with Thai ingredients",
+    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer-2024-american-pale-ale-with-thai-ingredients/"
   },
   {
     "Name": "The New South Brewoff",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/the-new-south-brewoff/"
   },
   {
-    "Name": "Bad Beer 2024 : American Pale Ale with Thai ingredients",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/bad-beer-2024-american-pale-ale-with-thai-ingredients/"
-  },
-  {
-    "Name": "These Ales of Wonder",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/these-ales-of-wonder/"
-  },
-  {
     "Name": "Music City Brew Off",
     "DetailsUrl": "https://www.homebrewersassociation.org/events/music-city-brew-off/"
-  },
-  {
-    "Name": "Damned in Black 6 – Imperial Stout Homebrewing Contest",
-    "DetailsUrl": "https://www.homebrewersassociation.org/events/damned-in-black-6-imperial-stout-homebrewing-contest/"
   },
   {
     "Name": "Copa Latinoamericana de Cervezas Artesanales 2024",

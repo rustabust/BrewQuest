@@ -12,35 +12,6 @@ namespace BrewQuestScraper
 {
     public abstract class BaseScraper
     {
-        public static void MergeCompetitionFiles(string masterFile, List<string> filesToMerge)
-        {
-            // load master file
-            List<Competition> masterList = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(masterFile);
-
-            // review the files
-            foreach (var fileToMerge in filesToMerge)
-            {
-                var fileComps = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(fileToMerge);
-
-                // foreach the comps or query?
-                foreach(var fileComp in fileComps)
-                {
-                    // how to compare?
-                    masterList.FirstOrDefault(a => a.)
-                }
-
-                // load file
-                // compare objects to those in the master file
-                // skip exact matches
-                // update any details
-                // dont delete any
-            }
-             
-            // save master list
-
-
-        }
-
         protected static async Task<HtmlDocument> getHtmlDocument(string url)
         {
             try
@@ -70,10 +41,10 @@ namespace BrewQuestScraper
             throw new Exception("no Meta Tag found in document with name " + propertyName);
         }
 
-        protected static void SyncCompetitionsJson(List<BrewQuest.Models.Competition> competitions, string fileName)
-        {
-            CommonFunctions.AddObjectsToFile(competitions, fileName);
-        }
+        //protected static void SyncCompetitionsJson(List<BrewQuest.Models.Competition> competitions, string fileName)
+        //{
+        //    CommonFunctions.AddObjectsToFile(competitions, fileName);
+        //}
 
         
     }

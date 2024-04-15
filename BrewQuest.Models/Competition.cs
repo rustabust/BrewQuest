@@ -25,11 +25,18 @@
 
         public override bool Equals(object? obj)
         {
-            bool result = false;
-            if (obj == null) { return false; }
-             currently arguing with chatgpt about whether i can check gethashcode from here so i dont have to update the fields in two places
-
-            
+            Competition otherComp = obj as Competition;
+            if (otherComp != null)
+            {
+                if (this.CompetitionName.ToLower() == otherComp.CompetitionName)
+                {
+                    if (this.LocationCity.ToLower() == otherComp.LocationCity.ToLower())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public override int GetHashCode()
