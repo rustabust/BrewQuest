@@ -39,7 +39,9 @@ namespace BrewQuestScraper
 
             }).ToList();
 
-            CommonFunctions.SyncCompetitionsToFile(competitions);
+            int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
+            Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
+
             return true;
         }
 

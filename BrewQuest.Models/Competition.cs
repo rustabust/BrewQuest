@@ -25,12 +25,12 @@
 
         public override bool Equals(object? obj)
         {
-            Competition otherComp = obj as Competition;
+            Competition? otherComp = obj as Competition;
             if (otherComp != null)
             {
-                if (this.CompetitionName.ToLower() == otherComp.CompetitionName)
+                if (string.Equals(this.CompetitionName, otherComp.CompetitionName, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (this.LocationCity.ToLower() == otherComp.LocationCity.ToLower())
+                    if (string.Equals(this.LocationCity, otherComp.LocationCity, StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
                     }

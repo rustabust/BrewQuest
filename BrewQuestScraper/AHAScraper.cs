@@ -17,7 +17,6 @@ namespace BrewQuestScraper
         public static async Task<bool> Scrape()
         {
             const bool HIT_LIVE_DETAILS = true;
-            //const string SCRAPE_OUTPUT_FILE_AHA = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\aha_scrape_comp_summaries.json";
 
             List<Competition> competitions = new List<Competition>();
             if (HIT_LIVE_DETAILS)
@@ -25,12 +24,17 @@ namespace BrewQuestScraper
                 var compSummaries = pullCompetitionSummaries();
 
                 // crawl the details page, parse, and convert to common objects
-                //for (int i = 0; i < 5; i++)
+                const int LIMIT_FOR_TESTING = -1; //-1 for all
                 int counter = 0;
                 Console.WriteLine("pulling competition infos from AHA details pages...");
                 int compSummaryTotal = compSummaries.Count;
                 foreach (var compSummary in compSummaries)
                 {
+                    if (LIMIT_FOR_TESTING != -1 && counter >= LIMIT_FOR_TESTING)
+                    {
+                        break;
+                    }   
+
                     counter++;
                     Console.WriteLine(counter + "/" + compSummaryTotal + " - pulling info for competition name=" + compSummary.Name + " url:" + compSummary.DetailsUrl);
                     Competition competition = await getAHACompetitionInfoFromDetailsPage(compSummary.DetailsUrl);
@@ -38,7 +42,8 @@ namespace BrewQuestScraper
                 }
 
                 // save/sync objects listing to file
-                CommonFunctions.SyncCompetitionsToFile(competitions);
+                int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
+                Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
             }
 
             // load from file for further testing/processing...
@@ -49,10 +54,14 @@ namespace BrewQuestScraper
 
             return true;
         }
+
+        /// <summary>
+        /// this function currently has some issue that it doesnt properly pull everything unless debugged / stepped through...
+        /// </summary>
+        /// <returns></returns>
         private static List<CompetitionSummary> pullBasicEventInfoFromLive(string saveToFileName)
         {
             var compInfos = new List<CompetitionSummary>();
-
 
             // Set up ChromeOptions to run in headless mode (optional)
             var options = new ChromeOptions();
@@ -99,7 +108,7 @@ namespace BrewQuestScraper
             }
             return compInfos;
         }
-
+       
         private static List<CompetitionSummary> pullCompetitionSummaries()
         {
             List<CompetitionSummary>? compSummaries = null;

@@ -13,9 +13,9 @@ namespace BrewQuest.Models
     {
         public const string COMPETITIONS_MASTER_JSON_FILEPATH = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\BrewQuestScraper\\Data\\BrewQuest_CompetitionsList_master.json";
 
-        public static void SyncCompetitionsToFile(List<Competition> competitions)
+        public static int SyncCompetitionsToFile(List<Competition> competitions)
         {
-            SyncObjectsToFile<Competition>(competitions, COMPETITIONS_MASTER_JSON_FILEPATH);
+            return SyncObjectsToFile<Competition>(competitions, COMPETITIONS_MASTER_JSON_FILEPATH);
         }
 
         /// <summary>
@@ -27,10 +27,11 @@ namespace BrewQuest.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="inputObjects"></param>
         /// <param name="fileName"></param>
-        public static void SyncObjectsToFile<T>(List<T> inputObjects, string fileName)
+        /// <returns>number of objects added to the file</returns>
+        public static int SyncObjectsToFile<T>(List<T> inputObjects, string fileName)
         {
-            List<T> existingObjects = new List<T>();
-
+            List<T>? existingObjects = new List<T>();
+            int objectsAdded = 0;
             // Read existing objects from file
             if (File.Exists(fileName))
             {
@@ -44,12 +45,14 @@ namespace BrewQuest.Models
                 if (!existingObjects.Any(a => a.Equals(obj)))
                 {
                     existingObjects.Add(obj);
+                    objectsAdded++;
                 }
             }
 
             // Write back to file
             string outputJson = JsonConvert.SerializeObject(existingObjects, Formatting.Indented);
             File.WriteAllText(fileName, outputJson);
+            return objectsAdded;
         }
 
         public static string nonZeroDateTime(DateTime? date)
