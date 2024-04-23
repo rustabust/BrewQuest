@@ -18,6 +18,12 @@
                 <a href="@Url.Action("Index", new { page = 1, sortColumn = "CompetitionName", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Competition Name</a>
             </th>
             <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "RegistrationWindowOpen", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Registration Window Open</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "RegistrationWindowClose", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Registration Window Close</a>
+            </th>
+            <th>
                 <a href="@Url.Action("Index", new { page = 1, sortColumn = "EntryWindowClose", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Entry Window Close</a>
             </th>
             <th>
@@ -39,6 +45,8 @@
         {
             <tr>
                 <td>@comp.CompetitionName</td>
+                <td>@comp.RegistrationWindowOpen</td>
+                <td>@comp.RegistrationWindowClose</td>
                 <td>@comp.EntryWindowClose</td>
                 <td>@comp.FinalJudgingDate</td>
                 <td>@comp.LocationCity</td>
