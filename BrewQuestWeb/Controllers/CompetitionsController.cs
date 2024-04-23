@@ -5,8 +5,6 @@ using System.Linq;
 
 public class CompetitionsController : Controller
 {
-
-
     public IActionResult Index(int page = 1, string sortColumn = "CompetitionName", string sortDirection = "asc", List<string> states = null)
     {
         const int pageSize = 30;
@@ -53,6 +51,10 @@ public class CompetitionsController : Controller
             if (_competitions == null)
             {
                 _competitions = CommonFunctions.LoadCompetitionsFromJson();
+
+                // temp test
+                //var regWindowOpenCount = _competitions.Count(a => a.RegistrationWindowOpen != null);
+                //var regWindowCloseCount = _competitions.Count(a => a.RegistrationWindowClose != null);
             }
             return _competitions;
         }

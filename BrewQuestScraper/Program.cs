@@ -12,7 +12,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Bout to start the BrewQuestScraper 1.0!");
 
-bool ahaCompleted = await AHAScraper.Scrape();
+//bool ahaCompleted = await AHAScraper.Scrape();
 bool completed = await BCScraper.Scrape();
 
 Console.WriteLine("scraper finished.");

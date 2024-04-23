@@ -20,6 +20,7 @@ namespace BrewQuestScraper
             public int Entries { get; set; }
             public decimal Fee { get; set; }
             public string? Status { get; set; }
+            public string? CompetitionUrl { get; set; }
         }
 
         public static async Task<bool> Scrape()
@@ -35,9 +36,25 @@ namespace BrewQuestScraper
                 EntryWindowClose = a.EntryEndDate,
                 FinalJudgingDate = a.FinalJudgingDate,
                 EntryFee = a.Fee.ToString(),
-                Status = a.Status
+                Status = a.Status,
+                CompetitionUrl = a.CompetitionUrl,
 
             }).ToList();
+
+            // go to the individual sites to get the rest of the info
+            {
+
+                var compsWithSites = competitions.Where(a => a.CompetitionUrl != null).ToList();
+                foreach (var competition in compsWithSites)
+                {
+                    var siteScrapeInfo = await ScrapeCompetitionSite(competition.CompetitionUrl);
+                    if (siteScrapeInfo != null)
+                    {
+                        competition.RegistrationWindowOpen = siteScrapeInfo.RegistrationOpenDate;
+                        competition.RegistrationWindowClose = siteScrapeInfo.RegistrationCloseDate;
+                    }
+                }
+            }
 
             int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
             Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
@@ -61,6 +78,14 @@ namespace BrewQuestScraper
                         {
                             var comp = new BCCompInfo();
                             comp.CompetitionName = cells[0].InnerText.Trim();
+
+                            // try to grab the url
+                            var aTag = cells[0].SelectSingleNode("a");
+                            if (aTag != null)
+                            {
+                                comp.CompetitionUrl = aTag.Attributes["href"].Value;
+                            }
+
                             comp.HostClub = cells[1].InnerText.Trim();
 
                             var sEntryRange = cells[2].InnerText.Trim();
