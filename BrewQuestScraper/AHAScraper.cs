@@ -9,6 +9,7 @@ using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using BrewQuest.Models;
+using BrewQuestScraper.Models;
 
 namespace BrewQuestScraper
 {
@@ -37,20 +38,31 @@ namespace BrewQuestScraper
 
                     counter++;
                     Console.WriteLine(counter + "/" + compSummaryTotal + " - pulling info for competition name=" + compSummary.Name + " url:" + compSummary.DetailsUrl);
-                    Competition competition = await getAHACompetitionInfoFromDetailsPage(compSummary.DetailsUrl);
+                    Competition? competition = await getAHACompetitionInfoFromDetailsPage(compSummary.DetailsUrl);
+                    if (competition == null)
+                    {
+                        Console.WriteLine("Failed to get competition info for " + compSummary.Name);
+                        continue;
+                    }
+
+                    if (!string.IsNullOrEmpty(competition.CompetitionUrl))
+                    {
+                        // hit the competition site for further details
+                        var siteScrapeInfo = await ScrapeCompetitionSite(competition.CompetitionUrl);
+                        if (siteScrapeInfo != null)
+                        {
+                            competition.RegistrationWindowOpen = siteScrapeInfo.RegistrationOpenDate;
+                            competition.RegistrationWindowClose = siteScrapeInfo.RegistrationCloseDate;
+                        }
+                    }
+
                     competitions.Add(competition);
                 }
 
                 // save/sync objects listing to file
-                int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
+              int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
                 Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
             }
-
-            // load from file for further testing/processing...
-           // competitions = CommonFunctions.DeserializeFromJsonFile<List<Competition>>(SCRAPE_OUTPUT_FILE_AHA);
-
-            // save somewhere to the cloud??
-            // what else next?
 
             return true;
         }
@@ -128,9 +140,11 @@ namespace BrewQuestScraper
             return compSummaries;
         }
 
-        private static async Task<BrewQuest.Models.Competition> getAHACompetitionInfoFromDetailsPage(string url)
+        private static async Task<BrewQuest.Models.Competition?> getAHACompetitionInfoFromDetailsPage(string url)
         {
-            HtmlDocument htmlDocument = await getHtmlDocument(url);
+            HtmlDocument? htmlDocument = await getHtmlDocument(url);
+            if (htmlDocument == null)
+                return null;
            
             string ogDescriptionString = getMetaTagFromHtmlDocument(htmlDocument, "og:description");
             string title = getMetaTagFromHtmlDocument(htmlDocument, "og:title");
@@ -138,6 +152,16 @@ namespace BrewQuestScraper
             var ahaCompetitionInfo = parseCompetitionInfo(ogDescriptionString);
             ahaCompetitionInfo.Name = title;
             ahaCompetitionInfo.SourceUrl = url;
+
+            // get the link to the competition site
+            {
+                HtmlNode linkNode = htmlDocument.DocumentNode.SelectSingleNode("//a[contains(text(), 'Visit Event Website')]");
+                if (linkNode != null)
+                {
+                    // Extract the href attribute value
+                    ahaCompetitionInfo.CompetitionUrl = linkNode.GetAttributeValue("href", "");
+                }
+            }
 
             var result = getCompetitionFromAhaCompInfo(ahaCompetitionInfo);
 
@@ -157,7 +181,8 @@ namespace BrewQuestScraper
                 LocationState = ahaCompInfo.State,
                 LocationCountry = ahaCompInfo.Country,
                 CompetitionDataSourceType = ahaCompInfo.CompetitionDataSourceType,
-                CompetitionUrl = ahaCompInfo.SourceUrl
+                CompetitionDataSourceUrl = ahaCompInfo.SourceUrl,
+                CompetitionUrl = ahaCompInfo.CompetitionUrl
             };
             return competition;
         }

@@ -14,64 +14,63 @@ namespace BrewQuestScraper
     {
         protected static async Task<CompetitionSiteInfo?> ScrapeCompetitionSite(string competitionUrl)
         {
-            CompetitionSiteInfo competitionSiteInfo = new CompetitionSiteInfo();
-
-            if (string.IsNullOrEmpty(competitionUrl))
+            try
             {
-                Console.WriteLine("competitionUrl is null or empty");
+                CompetitionSiteInfo competitionSiteInfo = new CompetitionSiteInfo();
+
+                if (string.IsNullOrEmpty(competitionUrl))
+                {
+                    Console.WriteLine("competitionUrl is null or empty");
+                    return null;
+                }
+
+                HtmlDocument? doc = await getHtmlDocument(competitionUrl);
+                if (doc == null)
+                {
+                    Console.WriteLine("Error getting html document for competition site " + competitionUrl);
+                    return null;
+                }
+
+                HtmlNode entryInfoNode = doc.DocumentNode.SelectSingleNode("//div[contains(text(), 'Entry registrations accepted')]");
+
+                // there might be some way to check the site content to see if its a BCOE&M site
+                // for now, just check if the entry info node is null
+                if (entryInfoNode == null)
+                {
+                    Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
+                    return null;
+                }
+                string entryInfo = entryInfoNode.InnerText;
+
+                entryInfo = entryInfo.ToLower();
+                entryInfo = entryInfo.Replace("entry registrations accepted", "").Trim();
+
+                entryInfo = entryInfo.Replace(",", "").ToUpper();
+                string[] dates = entryInfo.Split("THROUGH", StringSplitOptions.RemoveEmptyEntries);
+
+                if (dates.Length == 2)
+                {
+                    string startDate = dates[0].Trim();
+                    string endDate = dates[1].Trim();
+
+                    cleanupDateString(ref startDate);
+                    cleanupDateString(ref endDate);
+
+
+                    competitionSiteInfo.RegistrationOpenDate = DateTime.Parse(startDate);
+                    competitionSiteInfo.RegistrationCloseDate = DateTime.Parse(endDate);
+
+                    Console.WriteLine("Entry registration start date: " + startDate);
+                    Console.WriteLine("Entry registration end date: " + endDate);
+                }
+
+                return competitionSiteInfo;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error scraping competition site (url=" + competitionUrl + ") Exception Message : " + ex.Message);
                 return null;
             }
-
-            HtmlDocument doc = await getHtmlDocument(competitionUrl);
-
-            //string html = "<html><body><div>Entry registrations accepted 03/02/2024 12:00 PM, EST through 04/19/2024 6:45 PM, EDT.</div></body></html>";
-
-            //HtmlDocument doc = new HtmlDocument();
-            //doc.LoadHtml(html);
-
-            HtmlNode entryInfoNode = doc.DocumentNode.SelectSingleNode("//div[contains(text(), 'Entry registrations accepted')]");
-
-            // there might be some way to check the site content to see if its a BCOE&M site
-            // for now, just check if the entry info node is null
-            if (entryInfoNode == null)
-            {
-                Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
-                return null;
-            }
-            string entryInfo = entryInfoNode.InnerText;
-
-            entryInfo = entryInfo.ToLower();
-            entryInfo = entryInfo.Replace("entry registrations accepted","").Trim();
-
-
-            //int startIndex = entryInfo.IndexOf("accepted") + "accepted".Length;
-            //int endIndex = entryInfo.IndexOf("through");
-
-            //string registrationPeriod = entryInfo.Substring(startIndex, endIndex - startIndex).Trim();
-
-            //string[] dates = registrationPeriod.Split("through", StringSplitOptions.RemoveEmptyEntries);
-
-            entryInfo = entryInfo.Replace(",", "").ToUpper();
-            string[] dates = entryInfo.Split("THROUGH", StringSplitOptions.RemoveEmptyEntries);
-
-
-            if (dates.Length == 2)
-            {
-                string startDate = dates[0].Trim();
-                string endDate = dates[1].Trim();
-
-              cleanupDateString(ref startDate);
-                cleanupDateString(ref endDate);
-
-
-                competitionSiteInfo.RegistrationOpenDate = DateTime.Parse(startDate);
-                competitionSiteInfo.RegistrationCloseDate = DateTime.Parse(endDate);
-
-                Console.WriteLine("Entry registration start date: " + startDate);
-                Console.WriteLine("Entry registration end date: " + endDate);
-            }
-
-            return competitionSiteInfo;
         }
 
         private static void cleanupDateString(ref string dateString)
@@ -90,21 +89,23 @@ namespace BrewQuestScraper
                 dateString = dateString.Substring(0, pmIndex + 2);
             }
         }   
-        protected static async Task<HtmlDocument> getHtmlDocument(string url)
+
+        protected static async Task<HtmlDocument?> getHtmlDocument(string url)
         {
             try
             {
                 var httpClient = new HttpClient();
                 var html = await httpClient.GetStringAsync(url);
 
-                var htmlDocument = new HtmlDocument();
+                HtmlDocument htmlDocument = new HtmlDocument();
                 htmlDocument.LoadHtml(html);
 
                 return htmlDocument;
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine("Error getting html document : " + ex.Message);
+                return null;
             }
         }
 

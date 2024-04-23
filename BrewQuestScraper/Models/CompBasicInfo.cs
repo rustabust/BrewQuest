@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BrewQuestScraper
+namespace BrewQuestScraper.Models
 {
     /// <summary>
     /// class gives a brief summary of a competition. basically a name and url for more info.
@@ -12,6 +12,6 @@ namespace BrewQuestScraper
     public class CompetitionSummary
     {
         public string Name { get; set; }
-        public string DetailsUrl{ get; set; }
+        public string DetailsUrl { get; set; }
     }
 }

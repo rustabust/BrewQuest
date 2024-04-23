@@ -1,4 +1,5 @@
 ﻿using BrewQuest.Models;
+using BrewQuestScraper.Models;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -10,23 +11,16 @@ namespace BrewQuestScraper
 {
     public class BCScraper : BaseScraper
     {
-        public class BCCompInfo
-        {
-            public string? CompetitionName { get; set; }
-            public string? HostClub { get; set; }
-            public DateTime EntryStartDate { get; set; }
-            public DateTime EntryEndDate { get; set; }
-            public DateTime FinalJudgingDate { get; set; }
-            public int Entries { get; set; }
-            public decimal Fee { get; set; }
-            public string? Status { get; set; }
-            public string? CompetitionUrl { get; set; }
-        }
-
         public static async Task<bool> Scrape()
         {
             const string BREW_COMPETITIONS_DOTCOM_SCRAPE_URL = "https://www.brewingcompetitions.com/";
-            var doc = await getHtmlDocument(BREW_COMPETITIONS_DOTCOM_SCRAPE_URL);
+            HtmlDocument? doc = await getHtmlDocument(BREW_COMPETITIONS_DOTCOM_SCRAPE_URL);
+            if (doc == null)
+            {
+                Console.WriteLine("Error getting html document for " + BREW_COMPETITIONS_DOTCOM_SCRAPE_URL);
+                return false;
+            }
+
             var bcCompInfos = ParseHtmlTable(doc);
 
             var competitions = bcCompInfos.Select(a => new Competition
@@ -95,12 +89,6 @@ namespace BrewQuestScraper
                                 comp.EntryStartDate = startDate;
                             if (DateTime.TryParse(arrEntryRange[1], out DateTime endDate))
                                 comp.EntryEndDate = endDate;
-
-                            //if (DateTime.TryParse(cells[2].InnerText.Trim(), out DateTime startDate))
-                            //    comp.StartDate = startDate;
-                            //if (DateTime.TryParse(cells[3].InnerText.Trim(), out DateTime endDate))
-                            //    comp.EndDate = endDate;
-
 
                             if (DateTime.TryParse(cells[3].InnerText.Trim(), out DateTime finalJudgingDate))
                                 comp.FinalJudgingDate = finalJudgingDate;
