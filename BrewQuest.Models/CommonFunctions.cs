@@ -39,6 +39,9 @@ namespace BrewQuest.Models
                 existingObjects = JsonConvert.DeserializeObject<List<T>>(json);
             }
 
+            if (existingObjects == null)
+                existingObjects = new List<T>();
+
             // Add input objects if they don't already exist
             foreach (var obj in inputObjects)
             {

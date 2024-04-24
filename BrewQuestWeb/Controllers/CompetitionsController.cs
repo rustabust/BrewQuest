@@ -51,10 +51,6 @@ public class CompetitionsController : Controller
             if (_competitions == null)
             {
                 _competitions = CommonFunctions.LoadCompetitionsFromJson();
-
-                // temp test
-                //var regWindowOpenCount = _competitions.Count(a => a.RegistrationWindowOpen != null);
-                //var regWindowCloseCount = _competitions.Count(a => a.RegistrationWindowClose != null);
             }
             return _competitions;
         }

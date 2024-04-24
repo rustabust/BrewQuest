@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BrewQuest.Models\BrewQuest.Models.csproj" />
+    <ProjectReference Include="..\BrewQuestScraper\BrewQuestScraper.csproj" />
   </ItemGroup>
 
 </Project>

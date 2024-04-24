@@ -21,8 +21,16 @@ namespace BrewQuest.Models.Tests
 
         private static List<Competition> addTwoCompetitionsToFile()
         {
-            List<Competition> inputObjects = new List<Competition>();
+            List<Competition> inputObjects = getSomeCompetitions();
 
+            // write to file does not exist
+            CommonFunctions.SyncObjectsToFile<Competition>(inputObjects, TEST_JSON_FILE_PATH);
+
+            return inputObjects;
+        }
+
+        private static List<Competition> getSomeCompetitions()
+        {
             // get a couple objects
             Competition comp1 = new Competition
             {
@@ -32,13 +40,10 @@ namespace BrewQuest.Models.Tests
             {
                 CompetitionName = "Test Competition 2"
             };
+            var inputObjects = new List<Competition>();
             inputObjects.Add(comp1);
             inputObjects.Add(comp2);
-
-            // write to file does not exist
-            CommonFunctions.SyncObjectsToFile<Competition>(inputObjects, TEST_JSON_FILE_PATH);
-
-            return inputObjects
+            return inputObjects;
         }
 
         [TestMethod]
@@ -62,6 +67,15 @@ namespace BrewQuest.Models.Tests
             Assert.AreEqual("Test Competition 1", outputObjects[0].CompetitionName);
             Assert.AreEqual("Test Competition 2", outputObjects[1].CompetitionName);
             Assert.AreEqual("Test Competition 3", outputObjects[2].CompetitionName);
+        }
+
+        [TestMethod]
+        public void test_SyncObjectsToFile_fileEmpty()
+        {
+            File.Create(TEST_JSON_FILE_PATH).Close();
+
+            var comps = getSomeCompetitions();
+            CommonFunctions.SyncObjectsToFile(comps, TEST_JSON_FILE_PATH);
         }
 
         [TestCleanup]

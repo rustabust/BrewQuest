@@ -32,6 +32,7 @@ namespace BrewQuestScraper
                 EntryFee = a.Fee.ToString(),
                 Status = a.Status,
                 CompetitionUrl = a.CompetitionUrl,
+                 CompetitionDataSourceType = CompetitionDataSourceTypes.BrewCompetitions
 
             }).ToList();
 
