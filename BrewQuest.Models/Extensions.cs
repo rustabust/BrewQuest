@@ -39,4 +39,24 @@ namespace BrewQuest.Models
             return input;
         }
     }
+
+    public static class DateTimeExtensions
+    {
+        /// <summary>
+        /// for nullable datetimes, returns empty string for nulls 
+        /// otherwise returns a string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string ToDateStringSafe(this DateTime? input, string unknownStr = "", string format = "MM/dd/yyyy")
+        {
+            string result = unknownStr;
+            if (input.HasValue)
+            {
+                result = input.Value.ToString(format);
+            }
+            return result;
+        }
+    }
 }

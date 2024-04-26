@@ -14,6 +14,16 @@
         public string? Status { get; set; }
         public string? LocationCity { get; set; }
         public string? LocationState { get; set; }
+        public string Location
+        {
+            get 
+            {
+                if (!string.IsNullOrEmpty(LocationCity) && !string.IsNullOrEmpty(LocationState))
+                    return $"{LocationCity}, {LocationState}";
+                else
+                    return "";
+            }
+        }
         public string? LocationCountry { get; set; }
         public string? ShippingAddress { get; set; }
         public string? ShippingWindowOpen { get; set; }

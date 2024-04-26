@@ -1,78 +1,94 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Competition>
+
+@{
+    ViewData["Title"] = "Homebrew Competitions";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    string sortColumn = ViewBag.SortColumn;
+    string sortDirection = ViewBag.SortDirection;
+    List<string> statesFilter = ViewBag.StatesFilter ?? new List<string>();
 }
-@model List<BrewQuest.Models.Competition>
 
-<h1>Homebrew Competitions</h1>
+<h1>@ViewData["Title"]</h1>
 
-<table class="table" id="competitionTable">
+Showing : 
+<input type="checkbox" name="unitedstates" checked="checked" disabled="disabled" /> United States
+<input type="checkbox" name="international" disabled="disabled" /> International
+
+<table id="competitionsTable">
     <thead>
         <tr>
-            <th><a href="#" onclick="sortTable(0)">Competition Name</a></th>
-            <th><a href="#" onclick="sortTable(1)">Host</a></th>
-            <th><a href="#" onclick="sortTable(2)">Entry Window Open</a></th>
-            <th><a href="#" onclick="sortTable(3)">Entry Window Close</a></th>
-            <th><a href="#" onclick="sortTable(4)">Final Judging Date</a></th>
-            <th><a href="#" onclick="sortTable(5)">Entry Limit</a></th>
-            <th><a href="#" onclick="sortTable(6)">Entry Fee</a></th>
-            <th><a href="#" onclick="sortTable(7)">Status</a></th>
-            <th><a href="#" onclick="sortTable(8)">Location (City, State)</a></th>
-            <th><a href="#" onclick="sortTable(9)">Shipping Address</a></th>
-            <th><a href="#" onclick="sortTable(10)">Shipping Window Open</a></th>
-            <th><a href="#" onclick="sortTable(11)">Shipping Window Close</a></th>
-            <th><a href="#" onclick="sortTable(12)">Competition URL</a></th>
-            <th><a href="#" onclick="sortTable(13)">Host URL</a></th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "CompetitionName", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Competition Name</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "RegistrationWindowOpen", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Registration Window Open</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "RegistrationWindowClose", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Registration Window Close</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "EntryWindowClose", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Entry Window Close</a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { page = 1, sortColumn = "FinalJudgingDate", sortDirection = sortDirection == "asc" ? "desc" : "asc", states = statesFilter })">Final Judging Date</a>
+            </th>
+            <th>
+                Location
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var competition in Model)
+        @foreach (var comp in Model)
         {
             <tr>
-                <td>@competition.CompetitionName</td>
-                <td>@competition.Host</td>
-                <td>@CommonFunctions.nonZeroDateTime(competition.EntryWindowOpen)</td>
-                <td>@CommonFunctions.nonZeroDateTime(competition.EntryWindowClose)</td>
-                <td>@CommonFunctions.nonZeroDateTime(competition.FinalJudgingDate)</td>
-                <td>@CommonFunctions.nonZeroInt(competition.EntryLimit)</td>
-                <td>@competition.EntryFee</td>
-                <td>@competition.Status</td>
-                <td>@($"{competition.LocationCity}, {competition.LocationState}")</td>
-                <td>@competition.LocationCountry</td>
-                <td>@competition.ShippingAddress</td>
-                <td>@competition.ShippingWindowOpen</td>
-                <td>@competition.ShippingWindowClose</td>
-                <td><a href="@competition.CompetitionUrl">@competition.CompetitionUrl</a></td>
-                <td><a href="@competition.HostUrl">@competition.HostUrl</a></td>
+                <td>@comp.CompetitionName</td>
+                <td>@comp.RegistrationWindowOpen.ToDateStringSafe()</td>
+                <td>@comp.RegistrationWindowClose.ToDateStringSafe()</td>
+                <td>@comp.EntryWindowClose.ToDateStringSafe()</td>
+                <td>@comp.FinalJudgingDate.ToDateStringSafe()</td>
+                <td>@comp.Location</td>
             </tr>
         }
     </tbody>
 </table>
 
-<script>
-    function sortTable(columnIndex) {
-        var table, rows, switching, i, x, y, shouldSwitch;
-        table = document.getElementById("competitionTable");
-        switching = true;
-
-        while (switching) {
-            switching = false;
-            rows = table.getElementsByTagName("tr");
-
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("td")[columnIndex];
-                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
+<div>
+    <a href="@Url.Action("Index", new { page = 1, sortColumn, sortDirection, states = statesFilter })">First</a>
+    @if (currentPage > 1)
+    {
+        <a href="@Url.Action("Index", new { page = currentPage - 1, sortColumn, sortDirection, states = statesFilter })">Previous</a>
     }
-</script>
+    @if (currentPage < totalPages)
+    {
+        <a href="@Url.Action("Index", new { page = currentPage + 1, sortColumn, sortDirection, states = statesFilter })">Next</a>
+    }
+    <a href="@Url.Action("Index", new { page = totalPages, sortColumn, sortDirection, states = statesFilter })">Last</a>
+</div>
+@* 
+<button onclick="showModal()">Filter by State</button>
+
+<div id="filterModal" style="display:none;">
+    <form method="get" action="@Url.Action("Index")">
+        @foreach (var state in Model.Select(x => x.LocationState).Distinct())
+        {
+            <div>
+                <label>
+                    <input type="checkbox" name="states" value="@state" @(statesFilter.Contains(state) ? "checked" : "") /> @state
+                </label>
+            </div>
+        }
+        <button type="submit">Apply</button>
+    </form>
+    <button onclick="closeModal()">Close</button>
+</div>
+
+<script>
+    function showModal() {
+        document.getElementById('filterModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('filterModal').style.display = 'none';
+    }
+</script> *@
