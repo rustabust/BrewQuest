@@ -43,9 +43,7 @@ namespace BrewQuestScraper
                 string entryInfo = entryInfoNode.InnerText;
 
                 entryInfo = entryInfo.ToLower();
-                //entryInfo = entryInfo.Replace("entry registrations accepted", "").Trim();
-               // entryInfo = entryInfo.Split(KEY_PHRASE.ToLower(), StringSplitOptions.RemoveEmptyEntries)[1];
-               removeEverythingBeforeTag(ref entryInfo, KEY_PHRASE.ToLower(), false);
+               entryInfo = entryInfo.RemoveEverythingBeforeTag(KEY_PHRASE.ToLower(), false);
 
                 entryInfo = entryInfo.Replace(",", "").ToUpper();
                 string[] dates = entryInfo.Split("THROUGH", StringSplitOptions.RemoveEmptyEntries);
@@ -76,57 +74,11 @@ namespace BrewQuestScraper
 
         private static void cleanupDateString(ref string dateString)
         {
-            removeEverythingAfterTag(ref dateString, DateTime.Now.Year.ToString(), true);
-            removeEverythingAfterTag(ref dateString, (DateTime.Now.Year + 1).ToString(), true);
-            removeEverythingAfterTag(ref dateString, (DateTime.Now.Year -1).ToString(), true);
-
-            //removeEverythingAfterTag(ref dateString, "AM");
-            //removeEverythingAfterTag(ref dateString, "PM");
-
-            //// remove everything after am
-            //int amIndex = dateString.IndexOf("AM");
-            //if (amIndex > 0)
-            //{
-            //    dateString = dateString.Substring(0, amIndex + 2);
-            //}
-
-            //// remove everything after pm       
-            //int pmIndex = dateString.IndexOf("PM");
-            //if (pmIndex > 0)
-            //{
-            //    dateString = dateString.Substring(0, pmIndex + 2);
-            //}
+            dateString = dateString.RemoveEverythingAfterTag(DateTime.Now.Year.ToString(), true);
+            dateString = dateString.RemoveEverythingAfterTag((DateTime.Now.Year + 1).ToString(), true);
+            dateString = dateString.RemoveEverythingAfterTag((DateTime.Now.Year -1).ToString(), true);
         }   
 
-        private static void removeEverythingBeforeTag(ref string html, string tag, bool includeTag)
-        {
-            int tagIndex = html.IndexOf(tag);
-            if (tagIndex >= 0)
-            {
-                if (includeTag)
-                {
-                    html = html.Substring(tagIndex, html.Length - tagIndex);
-                }
-                else
-                {
-                    html = html.Substring(tagIndex + tag.Length, html.Length - tagIndex - tag.Length);
-                }
-                //html = html.Substring(tagIndex + tag.Length, html.Length - tagIndex - tag.Length);
-            }
-        }   
-        private static void removeEverythingAfterTag(ref string html, string tag, bool includeTag)
-        {
-            int tagIndex = html.IndexOf(tag);
-            if (tagIndex > 0)
-            {
-                var length = tagIndex;
-                if (includeTag)
-                {
-                    length += tag.Length;
-                }
-                html = html.Substring(0, length);
-            }
-        }
         protected static async Task<HtmlDocument?> getHtmlDocument(string url)
         {
             try

@@ -78,6 +78,42 @@ namespace BrewQuest.Models.Tests
             CommonFunctions.SyncObjectsToFile(comps, TEST_JSON_FILE_PATH);
         }
 
+        [TestMethod]
+        public void test_string_extensions_RemoveEverythingBeforeTag()
+        {
+            string input = "This is a test string";
+            string tag = "test";
+            string output = input.RemoveEverythingBeforeTag(tag, false);
+            Assert.AreEqual(" string", output);
+        }
+
+        [TestMethod]
+        public void test_string_extensions_RemoveEverythingBeforeTag_includeTag()
+        {
+            string input = "This is a test string";
+            string tag = "test";
+            string output = input.RemoveEverythingBeforeTag(tag, true);
+            Assert.AreEqual("test string", output);
+        }
+
+        [TestMethod]
+        public void test_string_extensions_RemoveEverythingAfterTag()
+        {
+            string input = "This is a test string";
+            string tag = "test";
+            string output = input.RemoveEverythingAfterTag(tag, false);
+            Assert.AreEqual("This is a ", output);
+        }
+
+        [TestMethod]
+            public void test_string_extensions_RemoveEverythingAfterTag_includeTag()
+        {
+            string input = "This is a test string";
+            string tag = "test";
+            string output = input.RemoveEverythingAfterTag(tag, true);
+            Assert.AreEqual("This is a test", output);
+        }
+
         [TestCleanup]
         public void TestCleanup()
         {
