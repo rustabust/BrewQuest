@@ -42,7 +42,7 @@ Showing :
         @foreach (var comp in Model)
         {
             <tr>
-                <td>@comp.CompetitionName</td>
+                <td><a href="@comp.CompetitionUrl" target="_blank">@comp.CompetitionName</a></td>
                 <td>@comp.RegistrationWindowOpen.ToDateStringSafe()</td>
                 <td>@comp.RegistrationWindowClose.ToDateStringSafe()</td>
                 <td>@comp.EntryWindowClose.ToDateStringSafe()</td>
