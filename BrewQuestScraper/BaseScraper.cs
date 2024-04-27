@@ -3,10 +3,13 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using BrewQuestScraper.Models;
 
 namespace BrewQuestScraper
 {
@@ -37,8 +40,19 @@ namespace BrewQuestScraper
                 // for now, just check if the entry info node is null
                 if (entryInfoNode == null)
                 {
-                    Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
-                    return null;
+                    // check to see if its closed. sometimes the pull the dates if the limit has been reached
+                    const string CLOSED_PHRASE = "The competition entry limit has been reached.";
+                    HtmlNode closedNode = doc.DocumentNode.SelectSingleNode("//span[contains(text(), '" + CLOSED_PHRASE + "')]");
+                    if (closedNode != null)
+                    {
+                        competitionSiteInfo.RegistrationClosed = true;
+                        return null;
+                    }
+                    else
+                    {
+                        Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
+                        return null;
+                    }
                 }
                 string entryInfo = entryInfoNode.InnerText;
 
@@ -56,8 +70,9 @@ namespace BrewQuestScraper
                     cleanupDateString(ref startDate);
                     cleanupDateString(ref endDate);
 
-                    competitionSiteInfo.RegistrationOpenDate = DateTime.Parse(startDate);
-                    competitionSiteInfo.RegistrationCloseDate = DateTime.Parse(endDate);
+                    bool isInternationalFormat = DateParsing.IsInternationalDateFormat(new string[] { startDate, endDate });
+                    competitionSiteInfo.RegistrationOpenDate = DateParsing.GetDateTimeFromString(startDate, isInternationalFormat);
+                    competitionSiteInfo.RegistrationCloseDate = DateParsing.GetDateTimeFromString(endDate, isInternationalFormat);
 
                     Console.WriteLine("Entry registration start date: " + startDate);
                     Console.WriteLine("Entry registration end date: " + endDate);
@@ -71,6 +86,8 @@ namespace BrewQuestScraper
                 return null;
             }
         }
+
+       
 
         private static void cleanupDateString(ref string dateString)
         {
@@ -108,18 +125,5 @@ namespace BrewQuestScraper
             }
             throw new Exception("no Meta Tag found in document with name " + propertyName);
         }
-
-        //protected static void SyncCompetitionsJson(List<BrewQuest.Models.Competition> competitions, string fileName)
-        //{
-        //    CommonFunctions.AddObjectsToFile(competitions, fileName);
-        //}
-
-
-    }
-
-    public class CompetitionSiteInfo
-    {
-        public DateTime? RegistrationOpenDate { get; set; }
-        public DateTime? RegistrationCloseDate { get; set; }
     }
 }

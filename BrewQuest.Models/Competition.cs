@@ -6,6 +6,7 @@
         public string? Host { get; set; }
         public DateTime? RegistrationWindowOpen { get; set; }
         public DateTime? RegistrationWindowClose { get; set; }
+        public bool? IsRegistrationClosed { get; set; }
         public DateTime? EntryWindowOpen { get; set; }
         public DateTime? EntryWindowClose { get; set; }
         public DateTime? FinalJudgingDate { get; set; }
@@ -28,7 +29,15 @@
         public string? ShippingAddress { get; set; }
         public string? ShippingWindowOpen { get; set; }
         public string? ShippingWindowClose { get; set; }
+
+        /// <summary>
+        /// url to the competition's website
+        /// </summary>
         public string? CompetitionUrl { get; set; }
+        
+        /// <summary>
+        /// url to the host's website (e.g. the homebrew club)
+        /// </summary>
         public string? HostUrl { get; set; }
         public CompetitionDataSourceTypes CompetitionDataSourceType { get; set; }
         public string? CompetitionDataSourceUrl { get; set; }

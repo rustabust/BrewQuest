@@ -13,7 +13,8 @@ using Formatting = Newtonsoft.Json.Formatting;
 Console.WriteLine("Bout to start the BrewQuestScraper 1.0!");
 
 //bool ahaCompleted = await AHAScraper.Scrape();
-bool completed = await BCScraper.Scrape();
+//bool completed = await BCScraper.Scrape();
+bool cleanupCompleted = await BCScraper.CleanupData();
 
 Console.WriteLine("scraper finished.");
 

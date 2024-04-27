@@ -63,8 +63,10 @@ namespace BrewQuest.Controllers
                     // for now, dont show international. to turn this on, just remove the where clause
                     // but also need to hook up the frontend checkboxes
                     _competitions = _competitions.Where(a => a.LocationCountry == null || a.LocationCountry == "US").ToList();
-                    
+
                     // some analysis...
+                    var bc_missing_reg_dates = _competitions.Where(a => a.CompetitionDataSourceType == CompetitionDataSourceTypes.BrewCompetitions && a.RegistrationWindowOpen == null).Count();
+
                     //var allCount = _competitions.Count();
                     //var noCountryForOldMen = _competitions.Count(a => string.IsNullOrEmpty(a.LocationCountry));
                     //Console.WriteLine("there are " + noCountryForOldMen + " out of " + allCount + " competitions with no country specified.");

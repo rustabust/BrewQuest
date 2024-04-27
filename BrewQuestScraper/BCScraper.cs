@@ -36,25 +36,50 @@ namespace BrewQuestScraper
 
             }).ToList();
 
-            // go to the individual sites to get the rest of the info
-            {
+            await scrapeCompetitionSite(competitions);
 
-                var compsWithSites = competitions.Where(a => a.CompetitionUrl != null).ToList();
-                foreach (var competition in compsWithSites)
+            int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
+            Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
+
+            return true;
+        }
+
+        public static async Task<bool> CleanupData()
+        {
+            bool result = false;
+
+            var competitions = CommonFunctions.LoadCompetitionsFromJson();
+            
+            // investigate the competitions that are missing registration dates
+            competitions = competitions.Where(a => a.CompetitionDataSourceType == CompetitionDataSourceTypes.BrewCompetitions && a.RegistrationWindowOpen == null).ToList();
+            await scrapeCompetitionSite(competitions);
+
+            CommonFunctions.UpdateCompetitionsInFile(competitions);
+
+            return result;
+        }
+
+        /// <summary>
+        /// goes to the individual competition sites to get the rest of the info
+        /// </summary>
+        /// <param name="competitions"></param>
+        /// <returns></returns>
+        protected static async Task scrapeCompetitionSite(List<Competition> competitions)
+        {
+            var compsWithSites = competitions.Where(a => a.CompetitionUrl != null).ToList();
+            foreach (var competition in compsWithSites)
+            {
+                if (competition.CompetitionUrl != null)
                 {
                     var siteScrapeInfo = await ScrapeCompetitionSite(competition.CompetitionUrl);
                     if (siteScrapeInfo != null)
                     {
                         competition.RegistrationWindowOpen = siteScrapeInfo.RegistrationOpenDate;
                         competition.RegistrationWindowClose = siteScrapeInfo.RegistrationCloseDate;
+                        competition.IsRegistrationClosed = siteScrapeInfo.RegistrationClosed;
                     }
                 }
             }
-
-            int compsAdded = CommonFunctions.SyncCompetitionsToFile(competitions);
-            Console.WriteLine("Added " + compsAdded + " competitions to the master list.");
-
-            return true;
         }
 
         public static List<BCCompInfo> ParseHtmlTable(HtmlDocument document)

@@ -58,20 +58,40 @@ namespace BrewQuest.Models
             return objectsAdded;
         }
 
-        public static string nonZeroDateTime(DateTime? date)
+        public static int UpdateCompetitionsInFile(List<Competition> competitions)
         {
-            if (date == null || date == new DateTime())
-                return "";
-            else
-                return date.ToString();
+            return UpdateObjectsInFile<Competition>(competitions, COMPETITIONS_MASTER_JSON_FILEPATH);
         }
-
-        public static string nonZeroInt(int? theInt)
+        public static int UpdateObjectsInFile<T>(List<T> inputObjects, string fileName)
         {
-            if (theInt == null || theInt == 0)
-                return "";
-            else
-                return theInt.ToString();
+            List<T>? existingObjects = new List<T>();
+            int objectsUpdated = 0;
+            // Read existing objects from file
+            if (File.Exists(fileName))
+            {
+                string json = File.ReadAllText(fileName);
+                existingObjects = JsonConvert.DeserializeObject<List<T>>(json);
+            }
+
+            if (existingObjects == null)
+                existingObjects = new List<T>();
+
+            // Update input objects if they already exist
+            foreach (var obj in inputObjects)
+            {
+                var existingObj = existingObjects.FirstOrDefault(a => a.Equals(obj));
+                if (existingObj != null)
+                {
+                    existingObjects.Remove(existingObj);
+                    existingObjects.Add(obj);
+                    objectsUpdated++;
+                }
+            }
+
+            // Write back to file
+            string outputJson = JsonConvert.SerializeObject(existingObjects, Formatting.Indented);
+            File.WriteAllText(fileName, outputJson);
+            return objectsUpdated;
         }
 
         /// <summary>
@@ -106,46 +126,46 @@ namespace BrewQuest.Models
             return competitions;
         }
 
-        public static List<Competition> LoadCompetitionsFromCsv()
-        {
-            List<Competition> competitions = new List<Competition>();
+        //public static List<Competition> LoadCompetitionsFromCsv()
+        //{
+        //    List<Competition> competitions = new List<Competition>();
 
-            // Path to your CSV file
-            string csvFilePath = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\Data\\CompMockData.csv";
+        //    // Path to your CSV file
+        //    string csvFilePath = "C:\\Users\\rusty\\OneDrive\\Documents\\GitHub\\BrewQuest\\Data\\CompMockData.csv";
 
-            // Read the CSV file
-            using (var reader = new StreamReader(csvFilePath))
-            {
-                // Skip the header
-                reader.ReadLine();
+        //    // Read the CSV file
+        //    using (var reader = new StreamReader(csvFilePath))
+        //    {
+        //        // Skip the header
+        //        reader.ReadLine();
 
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
+        //        while (!reader.EndOfStream)
+        //        {
+        //            var line = reader.ReadLine();
+        //            var values = line.Split(',');
 
-                    competitions.Add(new Competition
-                    {
-                        CompetitionName = values[0],
-                        Host = values[1],
-                        EntryWindowOpen = Convert.ToDateTime(values[2]),
-                        EntryWindowClose = Convert.ToDateTime(values[3]),
-                        FinalJudgingDate = Convert.ToDateTime(values[4]),
-                        EntryLimit = int.Parse(values[5]),
-                        EntryFee = values[6],
-                        Status = values[7],
-                        LocationCity = values[8],
-                        LocationState = values[9],
-                        ShippingAddress = values[10],
-                        ShippingWindowOpen = values[11],
-                        ShippingWindowClose = values[12],
-                        CompetitionUrl = values[13],
-                        HostUrl = values[14]
-                    });
-                }
-            }
+        //            competitions.Add(new Competition
+        //            {
+        //                CompetitionName = values[0],
+        //                Host = values[1],
+        //                EntryWindowOpen = Convert.ToDateTime(values[2]),
+        //                EntryWindowClose = Convert.ToDateTime(values[3]),
+        //                FinalJudgingDate = Convert.ToDateTime(values[4]),
+        //                EntryLimit = int.Parse(values[5]),
+        //                EntryFee = values[6],
+        //                Status = values[7],
+        //                LocationCity = values[8],
+        //                LocationState = values[9],
+        //                ShippingAddress = values[10],
+        //                ShippingWindowOpen = values[11],
+        //                ShippingWindowClose = values[12],
+        //                CompetitionUrl = values[13],
+        //                HostUrl = values[14]
+        //            });
+        //        }
+        //    }
 
-            return competitions;
-        }
+        //    return competitions;
+        //}
     }
 }
