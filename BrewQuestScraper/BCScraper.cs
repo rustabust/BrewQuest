@@ -45,13 +45,13 @@ namespace BrewQuestScraper
         }
 
         public static async Task<bool> CleanupData()
-        {
+         {
             bool result = false;
 
             var competitions = CommonFunctions.LoadCompetitionsFromJson();
             
             // investigate the competitions that are missing registration dates
-            competitions = competitions.Where(a => a.CompetitionDataSourceType == CompetitionDataSourceTypes.BrewCompetitions && a.RegistrationWindowOpen == null).ToList();
+            competitions = competitions.Where(a => a.CompetitionDataSourceType == CompetitionDataSourceTypes.BrewCompetitions && a.RegistrationWindowOpen == null && a.IsRegistrationClosed == null).ToList();
             await scrapeCompetitionSite(competitions);
 
             CommonFunctions.UpdateCompetitionsInFile(competitions);

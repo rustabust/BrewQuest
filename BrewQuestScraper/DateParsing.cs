@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrewQuest.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace BrewQuestScraper
 {
     public static class DateParsing
     {
+        public static bool IsInternationalDateFormat(string dateString)
+        {
+            return IsInternationalDateFormat(new string[] { dateString });
+        }
+
         public static bool IsInternationalDateFormat(string[] dateStrings)
         {
             bool result = false;
@@ -55,8 +61,13 @@ namespace BrewQuestScraper
             else
             {
                 var internationalDate = ParseInternationalDateString(dateString);
-                isInternationalDateFormat = internationalDate != null;
-                return internationalDate;
+                if (internationalDate == null)
+                    throw new Exception("could not parse date " + dateString + " - did not recognize as a valid domestic or international format");
+                else
+                {
+                    isInternationalDateFormat = true;
+                    return internationalDate;
+                }
             }
         }
 
@@ -73,6 +84,16 @@ namespace BrewQuestScraper
                 Console.WriteLine("Error parsing date string : " + dateString);
             }
             return null;
+        }
+
+        public static string CleanupDateString(string dateString)
+        {
+            dateString = dateString.RemoveEverythingAfterTag(DateTime.Now.Year.ToString(), true);
+            for(int i = -20; i < 20; i++)
+            {
+                dateString = dateString.RemoveEverythingAfterTag((DateTime.Now.Year + i).ToString(), true);
+            }
+            return dateString;
         }
     }
 }

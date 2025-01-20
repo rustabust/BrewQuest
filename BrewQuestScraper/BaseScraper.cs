@@ -41,23 +41,26 @@ namespace BrewQuestScraper
                 if (entryInfoNode == null)
                 {
                     // check to see if its closed. sometimes the pull the dates if the limit has been reached
-                    const string CLOSED_PHRASE = "The competition entry limit has been reached.";
-                    HtmlNode closedNode = doc.DocumentNode.SelectSingleNode("//span[contains(text(), '" + CLOSED_PHRASE + "')]");
-                    if (closedNode != null)
+                    string[] CLOSED_PHRASES = new string[] { "The competition entry limit has been reached.", "The competition paid entry limit has been reached." };
+                    foreach (var CLOSED_PHRASE in CLOSED_PHRASES)
                     {
-                        competitionSiteInfo.RegistrationClosed = true;
-                        return null;
+                        HtmlNode closedNode = doc.DocumentNode.SelectSingleNode("//span[contains(text(), '" + CLOSED_PHRASE + "')]");
+                        if (closedNode != null)
+                        {
+                            competitionSiteInfo.RegistrationClosed = true;
+                            return competitionSiteInfo;
+                        }                        
                     }
-                    else
-                    {
-                        Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
-                        return null;
-                    }
+                 
+                    // if we get here, we couldnt find the registration dates, and we could not find a recognized indication as to why its closed
+                    Console.WriteLine("competition registration info not found on competition site " + competitionUrl);
+                    return null;
                 }
+
                 string entryInfo = entryInfoNode.InnerText;
 
                 entryInfo = entryInfo.ToLower();
-               entryInfo = entryInfo.RemoveEverythingBeforeTag(KEY_PHRASE.ToLower(), false);
+                entryInfo = entryInfo.RemoveEverythingBeforeTag(KEY_PHRASE.ToLower(), false);
 
                 entryInfo = entryInfo.Replace(",", "").ToUpper();
                 string[] dates = entryInfo.Split("THROUGH", StringSplitOptions.RemoveEmptyEntries);
@@ -67,8 +70,8 @@ namespace BrewQuestScraper
                     string startDate = dates[0].Trim();
                     string endDate = dates[1].Trim();
 
-                    cleanupDateString(ref startDate);
-                    cleanupDateString(ref endDate);
+                    startDate = DateParsing.CleanupDateString(startDate);
+                    endDate = DateParsing.CleanupDateString(endDate);
 
                     bool isInternationalFormat = DateParsing.IsInternationalDateFormat(new string[] { startDate, endDate });
                     competitionSiteInfo.RegistrationOpenDate = DateParsing.GetDateTimeFromString(startDate, isInternationalFormat);
@@ -87,14 +90,7 @@ namespace BrewQuestScraper
             }
         }
 
-       
-
-        private static void cleanupDateString(ref string dateString)
-        {
-            dateString = dateString.RemoveEverythingAfterTag(DateTime.Now.Year.ToString(), true);
-            dateString = dateString.RemoveEverythingAfterTag((DateTime.Now.Year + 1).ToString(), true);
-            dateString = dateString.RemoveEverythingAfterTag((DateTime.Now.Year -1).ToString(), true);
-        }   
+        
 
         protected static async Task<HtmlDocument?> getHtmlDocument(string url)
         {
