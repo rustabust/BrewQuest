@@ -1,0 +1,15 @@
+todo
+
+main notes file here : https://docs.google.com/document/d/1ymUmLCFJR4a1W9c3G4PBmTThyu5pAZlyRsps0m4qOwA/edit?tab=t.0#heading=h.aqlwc1xmhpnu
+
+misc notes from today 1/20/2025
+scraper
+* when cant pull info from details list, save it into a bool for later manual review
+* still some issue with some date formats
+add logging for the clean data function and some comments
+sounds like looks like the main scraper function is safe to run over and over from live...
+error getting html document 508 insufficient resource. mark into a bool for later manual review
+
+UI
+* filter out past dates
+* after registering, add dates to your google calendar
